@@ -1,0 +1,2814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#8360C3">
+<meta name="description" content="ChrisTechVA LinkedIn Newsletter Generator - AI Workflow Automation">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ChrisTechVA · Newsletter Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="manifest" href="#manifest">
+<style>
+:root {
+  --g1: #8360C3;
+  --g2: #2EBF91;
+  --grad: linear-gradient(135deg, #8360C3, #2EBF91);
+  --grad-r: linear-gradient(135deg, #2EBF91, #8360C3);
+  --bg: #0a0a0f;
+  --bg2: #111118;
+  --bg3: #18181f;
+  --bg4: #1e1e28;
+  --surface: #22222e;
+  --surface2: #2a2a38;
+  --border: rgba(131,96,195,0.18);
+  --border2: rgba(46,191,145,0.15);
+  --text: #f0f0f8;
+  --text2: #a8a8c0;
+  --text3: #6868858;
+  --accent: #8360C3;
+  --accent2: #2EBF91;
+  --danger: #ff4f6a;
+  --warn: #f5a623;
+  --s: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 32px;
+  --s5: 40px;
+  --s6: 48px;
+  --r: 12px;
+  --r2: 20px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3);
+  --shadow2: 0 8px 40px rgba(131,96,195,0.2), 0 2px 8px rgba(0,0,0,0.4);
+  --shadow3: 0 20px 60px rgba(0,0,0,0.6);
+  --nav-h: 64px;
+  --font-d: 'Syne', sans-serif;
+  --font-b: 'DM Sans', sans-serif;
+  --fs-xs: 11px;
+  --fs-sm: 13px;
+  --fs-md: 15px;
+  --fs-lg: 19px;
+  --fw-light: 300;
+  --fw-reg: 400;
+  --fw-med: 500;
+  --fw-semi: 600;
+  --fw-bold: 700;
+  --fw-black: 800;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:var(--font-b);
+  background:var(--bg);
+  color:var(--text);
+  height:100%;
+  overflow:hidden;
+  font-size:var(--fs-md);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+#app{
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
+}
+/* ── APP HEADER ── */
+#app-header{
+  flex-shrink:0;
+  padding:var(--s2) var(--s3);
+  background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  backdrop-filter:blur(20px);
+  position:relative;
+  z-index:10;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo-mark{
+  width:36px;height:36px;
+  background:var(--grad);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);
+  font-weight:var(--fw-black);
+  font-size:14px;
+  color:#fff;
+  box-shadow:var(--shadow2);
+  flex-shrink:0;
+}
+.logo-text{
+  font-family:var(--font-d);
+  font-weight:var(--fw-bold);
+  font-size:var(--fs-lg);
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:-0.3px;
+}
+.logo-sub{
+  font-size:var(--fs-xs);
+  color:var(--text2);
+  font-weight:var(--fw-reg);
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+}
+.header-stats{
+  display:flex;gap:var(--s2);
+  align-items:center;
+}
+.stat-pill{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:4px 12px;
+  font-size:var(--fs-xs);
+  color:var(--text2);
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--font-d);
+  font-weight:var(--fw-semi);
+}
+.stat-pill span{
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  font-weight:var(--fw-bold);
+}
+/* ── MAIN CONTENT ── */
+#main{
+  flex:1;
+  overflow:hidden;
+  position:relative;
+}
+.view{
+  display:none;
+  position:absolute;
+  inset:0;
+  overflow-y:auto;
+  padding:var(--s3);
+  padding-bottom:calc(var(--nav-h) + var(--s3));
+  -webkit-overflow-scrolling:touch;
+}
+.view.active{display:block}
+.view::-webkit-scrollbar{width:4px}
+.view::-webkit-scrollbar-track{background:transparent}
+.view::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+/* ── BOTTOM NAV ── */
+#bottom-nav{
+  flex-shrink:0;
+  height:var(--nav-h);
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  display:flex;
+  align-items:stretch;
+  position:relative;
+  z-index:100;
+}
+.nav-item{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  cursor:pointer;
+  padding:var(--s) 4px;
+  position:relative;
+  border:none;
+  background:transparent;
+  color:var(--text2);
+  font-size:var(--fs-xs);
+  font-family:var(--font-b);
+  font-weight:var(--fw-med);
+  transition:color 0.2s;
+  min-height:44px;
+  outline:none;
+}
+.nav-item::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;
+  transform:translateX(-50%) scaleX(0);
+  width:32px;height:2px;
+  background:var(--grad);
+  border-radius:0 0 4px 4px;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+.nav-item.active::before{transform:translateX(-50%) scaleX(1)}
+.nav-icon-wrap{
+  width:36px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--s);
+  transition:background 0.2s;
+}
+.nav-item.active .nav-icon-wrap{
+  background:rgba(131,96,195,0.15);
+}
+.nav-item.active{color:var(--g1)}
+.nav-icon{width:20px;height:20px}
+/* ── SECTION TITLES ── */
+.section-header{
+  margin-bottom:var(--s3);
+}
+.section-title{
+  font-family:var(--font-d);
+  font-size:var(--fs-lg);
+  font-weight:var(--fw-bold);
+  letter-spacing:-0.3px;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.section-sub{
+  font-size:var(--fs-sm);
+  color:var(--text2);
+  margin-top:4px;
+}
+/* ── CARDS ── */
+.card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:var(--s3);
+  margin-bottom:var(--s2);
+  box-shadow:var(--shadow);
+  transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;
+}
+.card:hover{
+  border-color:rgba(131,96,195,0.35);
+  box-shadow:var(--shadow2);
+}
+.card.featured{
+  background:linear-gradient(135deg,rgba(131,96,195,0.08),rgba(46,191,145,0.05));
+  border-color:rgba(131,96,195,0.3);
+}
+/* ── GENERATOR VIEW ── */
+.gen-hero{
+  background:linear-gradient(135deg,rgba(131,96,195,0.12),rgba(46,191,145,0.08));
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:var(--s4);
+  margin-bottom:var(--s3);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.gen-hero::before{
+  content:'';
+  position:absolute;
+  top:-50%;left:-50%;
+  width:200%;height:200%;
+  background:radial-gradient(circle at 30% 30%,rgba(131,96,195,0.06) 0%,transparent 50%),
+             radial-gradient(circle at 70% 70%,rgba(46,191,145,0.04) 0%,transparent 50%);
+  pointer-events:none;
+}
+.gen-hero-title{
+  font-family:var(--font-d);
+  font-size:26px;
+  font-weight:var(--fw-black);
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  letter-spacing:-0.5px;
+  margin-bottom:var(--s);
+}
+.gen-hero-sub{
+  color:var(--text2);
+  font-size:var(--fs-sm);
+  line-height:1.7;
+}
+/* ── FORM ── */
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--s2);
+  margin-bottom:var(--s2);
+}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:var(--s);
+}
+.form-label{
+  font-size:var(--fs-sm);
+  font-weight:var(--fw-med);
+  color:var(--text2);
+  font-family:var(--font-d);
+  letter-spacing:0.3px;
+  text-transform:uppercase;
+  font-size:var(--fs-xs);
+}
+.form-select,.form-input{
+  background:var(--bg4);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:10px 14px;
+  color:var(--text);
+  font-family:var(--font-b);
+  font-size:var(--fs-md);
+  min-height:44px;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  width:100%;
+}
+.form-select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238360C3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:38px;
+  cursor:pointer;
+}
+.form-select:focus,.form-input:focus{
+  border-color:var(--g1);
+  box-shadow:0 0 0 3px rgba(131,96,195,0.15);
+}
+.form-select option{background:var(--bg4);color:var(--text)}
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:44px;
+  padding:10px 20px;
+  border-radius:var(--r);
+  border:none;
+  cursor:pointer;
+  font-family:var(--font-d);
+  font-weight:var(--fw-semi);
+  font-size:var(--fs-md);
+  transition:all 0.2s;
+  outline:none;
+  white-space:nowrap;
+}
+.btn:focus-visible{box-shadow:0 0 0 3px rgba(131,96,195,0.4)}
+.btn-primary{
+  background:var(--grad);
+  color:#fff;
+  box-shadow:0 4px 16px rgba(131,96,195,0.35);
+  width:100%;
+}
+.btn-primary:hover{box-shadow:0 6px 24px rgba(131,96,195,0.5);transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0);box-shadow:none}
+.btn-secondary{
+  background:var(--surface);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+.btn-secondary:hover{border-color:var(--g1);color:var(--g1)}
+.btn-ghost{
+  background:transparent;
+  color:var(--text2);
+  border:1px solid var(--border);
+}
+.btn-ghost:hover{background:var(--surface);color:var(--text)}
+.btn-sm{min-height:36px;padding:6px 14px;font-size:var(--fs-sm)}
+.btn-icon{
+  width:36px;height:36px;
+  min-height:36px;
+  padding:0;
+  border-radius:var(--s);
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text2);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+  outline:none;
+  flex-shrink:0;
+}
+.btn-icon:hover{border-color:var(--g1);color:var(--g1)}
+.btn-icon.active{background:rgba(131,96,195,0.2);border-color:var(--g1);color:var(--g1)}
+.btn-icon:focus-visible{box-shadow:0 0 0 3px rgba(131,96,195,0.4)}
+/* ── NEWSLETTER CARD ── */
+.nl-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:var(--s3);
+  margin-bottom:var(--s2);
+  box-shadow:var(--shadow);
+  transition:all 0.2s;
+  display:grid;
+  grid-template-rows:auto auto auto auto;
+  gap:var(--s2);
+}
+.nl-card:hover{border-color:rgba(131,96,195,0.3);box-shadow:var(--shadow2)}
+.nl-card.favorited{border-color:rgba(46,191,145,0.35)}
+.nl-card.used{opacity:0.55}
+.nl-card-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:var(--s2);
+}
+.nl-meta{flex:1;min-width:0}
+.nl-num{
+  font-size:var(--fs-xs);
+  color:var(--text3);
+  font-family:var(--font-d);
+  font-weight:var(--fw-semi);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+.nl-title{
+  font-family:var(--font-d);
+  font-weight:var(--fw-bold);
+  font-size:var(--fs-md);
+  color:var(--text);
+  line-height:1.3;
+  letter-spacing:-0.2px;
+}
+.nl-badge{
+  display:inline-flex;align-items:center;
+  padding:3px 10px;
+  border-radius:100px;
+  font-size:var(--fs-xs);
+  font-weight:var(--fw-semi);
+  font-family:var(--font-d);
+  flex-shrink:0;
+  white-space:nowrap;
+}
+.nl-badge.topic-badge{
+  background:rgba(131,96,195,0.12);
+  border:1px solid rgba(131,96,195,0.25);
+  color:var(--g1);
+}
+.nl-body{
+  font-size:var(--fs-sm);
+  color:var(--text2);
+  line-height:1.75;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+.nl-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--s);
+}
+.nl-actions{display:flex;gap:6px;flex-wrap:wrap}
+.nl-tags{
+  display:flex;gap:6px;flex-wrap:wrap;
+  flex:1;
+}
+.tag{
+  padding:2px 8px;
+  border-radius:100px;
+  font-size:var(--fs-xs);
+  background:var(--surface);
+  color:var(--text2);
+  border:1px solid var(--border);
+}
+.copy-feedback{
+  position:fixed;
+  bottom:calc(var(--nav-h) + var(--s3));
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--grad);
+  color:#fff;
+  padding:10px 20px;
+  border-radius:100px;
+  font-size:var(--fs-sm);
+  font-weight:var(--fw-semi);
+  font-family:var(--font-d);
+  box-shadow:var(--shadow2);
+  opacity:0;
+  pointer-events:none;
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  z-index:1000;
+  white-space:nowrap;
+}
+.copy-feedback.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* ── SEARCH / FILTER BAR ── */
+.filter-bar{
+  display:flex;
+  gap:var(--s);
+  margin-bottom:var(--s3);
+  align-items:center;
+  flex-wrap:wrap;
+}
+.search-wrap{
+  flex:1;
+  min-width:180px;
+  position:relative;
+}
+.search-icon{
+  position:absolute;left:12px;top:50%;transform:translateY(-50%);
+  pointer-events:none;
+  color:var(--text2);
+}
+.search-input{
+  width:100%;
+  background:var(--bg4);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:10px 14px 10px 38px;
+  color:var(--text);
+  font-family:var(--font-b);
+  font-size:var(--fs-md);
+  min-height:44px;
+  outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.search-input:focus{border-color:var(--g1);box-shadow:0 0 0 3px rgba(131,96,195,0.15)}
+.search-input::placeholder{color:var(--text3)}
+.filter-select{
+  background:var(--bg4);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:10px 34px 10px 14px;
+  color:var(--text);
+  font-family:var(--font-b);
+  font-size:var(--fs-sm);
+  min-height:44px;
+  outline:none;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238360C3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  cursor:pointer;
+  transition:border-color 0.2s;
+}
+.filter-select:focus{border-color:var(--g1);box-shadow:0 0 0 3px rgba(131,96,195,0.15)}
+.filter-select option{background:var(--bg4)}
+/* ── TOPICS VIEW ── */
+.topics-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:var(--s2);
+  margin-bottom:var(--s3);
+}
+.topic-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:var(--s2);
+  cursor:pointer;
+  transition:all 0.2s;
+  text-align:center;
+  user-select:none;
+}
+.topic-card:hover{border-color:rgba(131,96,195,0.4);transform:translateY(-2px);box-shadow:var(--shadow2)}
+.topic-card.active{
+  border-color:var(--g1);
+  background:rgba(131,96,195,0.1);
+}
+.topic-icon{font-size:24px;margin-bottom:var(--s);display:block}
+.topic-name{
+  font-family:var(--font-d);
+  font-size:var(--fs-sm);
+  font-weight:var(--fw-semi);
+  color:var(--text);
+  line-height:1.3;
+}
+.topic-count{
+  font-size:var(--fs-xs);
+  color:var(--text2);
+  margin-top:4px;
+}
+/* ── EXPORT VIEW ── */
+.export-grid{
+  display:grid;
+  gap:var(--s2);
+}
+.export-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:var(--s3);
+  display:flex;align-items:center;gap:var(--s2);
+  box-shadow:var(--shadow);
+  transition:all 0.2s;
+}
+.export-card:hover{border-color:rgba(131,96,195,0.3)}
+.export-icon{
+  width:48px;height:48px;
+  border-radius:var(--r);
+  background:rgba(131,96,195,0.12);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-size:20px;
+}
+.export-info{flex:1}
+.export-name{
+  font-family:var(--font-d);
+  font-weight:var(--fw-semi);
+  font-size:var(--fs-md);
+  margin-bottom:4px;
+}
+.export-desc{font-size:var(--fs-sm);color:var(--text2)}
+/* ── SETTINGS VIEW ── */
+.settings-section{
+  margin-bottom:var(--s4);
+}
+.settings-title{
+  font-family:var(--font-d);
+  font-weight:var(--fw-semi);
+  font-size:var(--fs-sm);
+  color:var(--text2);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:var(--s2);
+}
+.setting-row{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:var(--s2) var(--s3);
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:var(--s);
+  min-height:52px;
+  gap:var(--s2);
+}
+.setting-info{}
+.setting-name{font-size:var(--fs-md);font-weight:var(--fw-med)}
+.setting-desc{font-size:var(--fs-xs);color:var(--text2);margin-top:2px}
+.toggle{
+  width:44px;height:24px;
+  background:var(--surface2);
+  border-radius:100px;
+  position:relative;
+  cursor:pointer;
+  border:none;
+  outline:none;
+  transition:background 0.2s;
+  flex-shrink:0;
+}
+.toggle.on{background:var(--grad)}
+.toggle::after{
+  content:'';
+  position:absolute;
+  left:3px;top:3px;
+  width:18px;height:18px;
+  background:#fff;
+  border-radius:50%;
+  transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:0 1px 4px rgba(0,0,0,0.3);
+}
+.toggle.on::after{transform:translateX(20px)}
+.toggle:focus-visible{box-shadow:0 0 0 3px rgba(131,96,195,0.4)}
+/* ── LOADING / EMPTY ── */
+.empty-state{
+  text-align:center;
+  padding:var(--s6) var(--s4);
+  color:var(--text2);
+}
+.empty-icon{font-size:48px;margin-bottom:var(--s2);display:block}
+.empty-title{font-family:var(--font-d);font-size:var(--fs-lg);font-weight:var(--fw-bold);margin-bottom:var(--s);color:var(--text)}
+.empty-sub{font-size:var(--fs-sm);color:var(--text2)}
+.loading-spinner{
+  width:32px;height:32px;
+  border:2px solid var(--border);
+  border-top-color:var(--g1);
+  border-radius:50%;
+  animation:spin 0.7s linear infinite;
+  margin:var(--s6) auto;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-bar-wrap{
+  background:var(--bg4);
+  border-radius:100px;
+  height:6px;
+  overflow:hidden;
+  margin:var(--s2) 0;
+}
+.progress-bar{
+  height:100%;
+  background:var(--grad);
+  border-radius:100px;
+  transition:width 0.3s;
+  width:0;
+}
+/* ── RESULTS COUNT ── */
+.results-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:var(--s2);
+  flex-wrap:wrap;
+  gap:var(--s);
+}
+.results-count{
+  font-size:var(--fs-sm);
+  color:var(--text2);
+  font-family:var(--font-d);
+}
+.results-count strong{color:var(--g1);font-weight:var(--fw-bold)}
+/* ── PROFILE CARD ── */
+.profile-card{
+  background:linear-gradient(135deg,rgba(131,96,195,0.1),rgba(46,191,145,0.07));
+  border:1px solid rgba(131,96,195,0.25);
+  border-radius:var(--r2);
+  padding:var(--s3);
+  margin-bottom:var(--s3);
+  display:flex;align-items:center;gap:var(--s3);
+}
+.profile-avatar{
+  width:56px;height:56px;
+  background:var(--grad);
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-d);
+  font-size:22px;
+  font-weight:var(--fw-black);
+  color:#fff;
+  flex-shrink:0;
+  box-shadow:var(--shadow2);
+}
+.profile-name{font-family:var(--font-d);font-size:var(--fs-lg);font-weight:var(--fw-bold);background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.profile-role{font-size:var(--fs-sm);color:var(--text2);margin-top:2px}
+/* ── GEN PROGRESS ── */
+#gen-progress-wrap{display:none;margin-bottom:var(--s3)}
+#gen-progress-wrap.visible{display:block}
+#gen-progress-status{font-size:var(--fs-sm);color:var(--text2);margin-bottom:var(--s);text-align:center}
+/* ── PAGINATION ── */
+.pagination{
+  display:flex;align-items:center;justify-content:center;
+  gap:var(--s);
+  margin-top:var(--s3);
+  flex-wrap:wrap;
+}
+.page-btn{
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:var(--s);
+  background:var(--bg4);
+  border:1px solid var(--border);
+  color:var(--text2);
+  cursor:pointer;
+  font-size:var(--fs-sm);
+  font-family:var(--font-d);
+  font-weight:var(--fw-semi);
+  transition:all 0.15s;
+}
+.page-btn:hover{border-color:var(--g1);color:var(--g1)}
+.page-btn.active{background:rgba(131,96,195,0.2);border-color:var(--g1);color:var(--g1)}
+.page-btn.disabled{opacity:0.3;pointer-events:none}
+.page-info{font-size:var(--fs-sm);color:var(--text2);font-family:var(--font-d)}
+/* ── TOAST ── */
+#toast{
+  position:fixed;
+  bottom:calc(var(--nav-h) + var(--s3));
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:12px 20px;
+  border-radius:100px;
+  font-size:var(--fs-sm);
+  font-weight:var(--fw-med);
+  box-shadow:var(--shadow3);
+  opacity:0;
+  pointer-events:none;
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  z-index:2000;
+  white-space:nowrap;
+  max-width:90vw;
+  text-align:center;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.success{background:var(--grad);color:#fff;border:none}
+/* ── SCROLL TO TOP ── */
+.fab{
+  position:fixed;
+  bottom:calc(var(--nav-h) + var(--s3));
+  right:var(--s3);
+  width:44px;height:44px;
+  background:var(--grad);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  box-shadow:var(--shadow2);
+  opacity:0;
+  transform:scale(0.8);
+  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  border:none;
+  color:#fff;
+  z-index:50;
+  pointer-events:none;
+}
+.fab.visible{opacity:1;transform:scale(1);pointer-events:auto}
+/* ── SKELETON ── */
+.skeleton{
+  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:var(--r);
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-line{height:12px;margin-bottom:8px;}
+.skel-title{height:18px;width:70%;margin-bottom:12px}
+/* ── RESPONSIVE ── */
+@media(min-width:600px){
+  .view{padding:var(--s4);padding-bottom:calc(var(--nav-h) + var(--s4))}
+  .form-row{grid-template-columns:1fr 1fr 1fr}
+  .topics-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+}
+@media(min-width:900px){
+  #app{max-width:800px;margin:0 auto}
+  body{background:#050508}
+  #app{box-shadow:var(--shadow3)}
+}
+</style>
+</head>
+<body>
+<div id="app" role="application" aria-label="ChrisTechVA Newsletter Studio">
+
+  <!-- APP HEADER -->
+  <header id="app-header" role="banner">
+    <div class="logo">
+      <div class="logo-mark" aria-hidden="true">CT</div>
+      <div>
+        <div class="logo-text">ChrisTechVA</div>
+        <div class="logo-sub">Newsletter Studio</div>
+      </div>
+    </div>
+    <div class="header-stats" aria-live="polite" aria-atomic="true">
+      <div class="stat-pill"><span id="stat-total">0</span> Posts</div>
+      <div class="stat-pill"><span id="stat-favs">0</span> Saved</div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="main" role="main">
+
+    <!-- GENERATOR VIEW -->
+    <section id="view-generator" class="view active" aria-label="Newsletter Generator">
+      <div class="gen-hero" role="region" aria-label="Welcome">
+        <div class="gen-hero-title">AI Newsletter Generator</div>
+        <div class="gen-hero-sub">Generate 200–300 LinkedIn-ready newsletters positioning ChrisTechVA as the go-to AI Workflow Automation Specialist for business clients.</div>
+      </div>
+
+      <div class="profile-card" role="region" aria-label="Profile">
+        <div class="profile-avatar" aria-hidden="true">C</div>
+        <div>
+          <div class="profile-name">ChrisTechVA</div>
+          <div class="profile-role">AI Workflow Automation Specialist · LinkedIn Authority</div>
+        </div>
+      </div>
+
+      <div class="card" role="region" aria-label="Generation Settings">
+        <div class="section-header">
+          <div class="section-title">Generation Settings</div>
+          <div class="section-sub">Configure how newsletters are generated</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="sel-count">Number of Posts</label>
+            <select class="form-select" id="sel-count" aria-label="Number of posts to generate">
+              <option value="50">50 Posts</option>
+              <option value="100">100 Posts</option>
+              <option value="150">150 Posts</option>
+              <option value="200" selected>200 Posts</option>
+              <option value="250">250 Posts</option>
+              <option value="300">300 Posts</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sel-tone">Tone</label>
+            <select class="form-select" id="sel-tone" aria-label="Newsletter tone">
+              <option value="professional">Professional</option>
+              <option value="authoritative" selected>Authoritative</option>
+              <option value="educational">Educational</option>
+              <option value="conversational">Conversational</option>
+              <option value="strategic">Strategic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sel-length">Post Length</label>
+            <select class="form-select" id="sel-length" aria-label="Post length">
+              <option value="short">Short (100–150 words)</option>
+              <option value="medium" selected>Medium (150–250 words)</option>
+              <option value="long">Long (250–350 words)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="gen-progress-wrap" aria-live="polite" aria-atomic="true">
+          <div id="gen-progress-status">Generating newsletters...</div>
+          <div class="progress-bar-wrap"><div class="progress-bar" id="gen-progress-bar"></div></div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-generate" aria-label="Generate newsletters">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate Newsletters
+        </button>
+      </div>
+
+      <div class="card" id="quick-stats-card" style="display:none" role="region" aria-label="Quick Statistics">
+        <div class="section-title" style="margin-bottom:var(--s2)">Quick Stats</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s2);text-align:center">
+          <div>
+            <div style="font-family:var(--font-d);font-size:28px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="qs-total">0</div>
+            <div style="font-size:var(--fs-xs);color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Total</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-d);font-size:28px;font-weight:800;color:var(--g2)" id="qs-favs">0</div>
+            <div style="font-size:var(--fs-xs);color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Saved</div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-d);font-size:28px;font-weight:800;color:var(--warn)" id="qs-used">0</div>
+            <div style="font-size:var(--fs-xs);color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Used</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIBRARY VIEW -->
+    <section id="view-library" class="view" aria-label="Newsletter Library">
+      <div class="section-header">
+        <div class="section-title">Newsletter Library</div>
+        <div class="section-sub" id="lib-subtitle">Browse, search, copy and manage all generated newsletters</div>
+      </div>
+
+      <div class="filter-bar" role="search">
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="search" class="search-input" id="search-input" placeholder="Search newsletters..." aria-label="Search newsletters">
+        </div>
+        <select class="filter-select" id="filter-topic" aria-label="Filter by topic">
+          <option value="">All Topics</option>
+        </select>
+        <select class="filter-select" id="filter-status" aria-label="Filter by status">
+          <option value="">All</option>
+          <option value="favorited">Saved</option>
+          <option value="used">Used</option>
+          <option value="unused">Unused</option>
+        </select>
+      </div>
+
+      <div class="results-row" aria-live="polite" aria-atomic="true">
+        <div class="results-count">Showing <strong id="results-shown">0</strong> of <strong id="results-total">0</strong> newsletters</div>
+        <button class="btn btn-ghost btn-sm" id="btn-clear-filters" aria-label="Clear all filters">Clear</button>
+      </div>
+
+      <div id="library-list" role="list" aria-label="Newsletter list"></div>
+      <div class="pagination" id="pagination" role="navigation" aria-label="Page navigation"></div>
+    </section>
+
+    <!-- TOPICS VIEW -->
+    <section id="view-topics" class="view" aria-label="Topics">
+      <div class="section-header">
+        <div class="section-title">Topics</div>
+        <div class="section-sub">Browse newsletters by AI automation topic</div>
+      </div>
+      <div class="topics-grid" id="topics-grid" role="list" aria-label="Topics list"></div>
+      <div id="topic-filtered-list" role="list" aria-label="Topic newsletters"></div>
+    </section>
+
+    <!-- EXPORT VIEW -->
+    <section id="view-export" class="view" aria-label="Export">
+      <div class="section-header">
+        <div class="section-title">Export</div>
+        <div class="section-sub">Download your newsletters in multiple formats</div>
+      </div>
+      <div class="export-grid">
+        <div class="export-card">
+          <div class="export-icon">📋</div>
+          <div class="export-info">
+            <div class="export-name">Copy All to Clipboard</div>
+            <div class="export-desc">Copy all generated newsletters formatted for direct paste</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-copy-all" aria-label="Copy all newsletters to clipboard">Copy</button>
+        </div>
+        <div class="export-card">
+          <div class="export-icon">📄</div>
+          <div class="export-info">
+            <div class="export-name">Export as TXT</div>
+            <div class="export-desc">Download all newsletters as a plain text file</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-export-txt" aria-label="Export as text file">Export</button>
+        </div>
+        <div class="export-card">
+          <div class="export-icon">🗂️</div>
+          <div class="export-info">
+            <div class="export-name">Export as JSON</div>
+            <div class="export-desc">Structured JSON with all newsletter data and metadata</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-export-json" aria-label="Export as JSON file">Export</button>
+        </div>
+        <div class="export-card">
+          <div class="export-icon">⭐</div>
+          <div class="export-info">
+            <div class="export-name">Export Saved Only</div>
+            <div class="export-desc">Export only your favorited newsletters as TXT</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-export-favs" aria-label="Export saved newsletters">Export</button>
+        </div>
+        <div class="export-card">
+          <div class="export-icon">📑</div>
+          <div class="export-info">
+            <div class="export-name">Export as CSV</div>
+            <div class="export-desc">Spreadsheet-compatible CSV with all newsletter fields</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-export-csv" aria-label="Export as CSV">Export</button>
+        </div>
+      </div>
+      <div style="margin-top:var(--s4);padding:var(--s3);background:var(--bg3);border-radius:var(--r2);border:1px solid var(--border)">
+        <div style="font-family:var(--font-d);font-size:var(--fs-sm);font-weight:var(--fw-semi);margin-bottom:var(--s);color:var(--text2);text-transform:uppercase;letter-spacing:0.5px">Export Summary</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s);text-align:center">
+          <div><div style="font-family:var(--font-d);font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="exp-total">0</div><div style="font-size:var(--fs-xs);color:var(--text2)">Total</div></div>
+          <div><div style="font-family:var(--font-d);font-size:22px;font-weight:800;color:var(--g2)" id="exp-favs">0</div><div style="font-size:var(--fs-xs);color:var(--text2)">Saved</div></div>
+          <div><div style="font-family:var(--font-d);font-size:22px;font-weight:800;color:var(--warn)" id="exp-used">0</div><div style="font-size:var(--fs-xs);color:var(--text2)">Used</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS VIEW -->
+    <section id="view-settings" class="view" aria-label="Settings">
+      <div class="section-header">
+        <div class="section-title">Settings</div>
+        <div class="section-sub">Customize your newsletter experience</div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-title">Display</div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Show Post Numbers</div><div class="setting-desc">Display #001, #002 numbering on posts</div></div>
+          <button class="toggle on" id="tog-numbers" role="switch" aria-checked="true" aria-label="Show post numbers"></button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Show Topic Badges</div><div class="setting-desc">Display topic category tags on cards</div></div>
+          <button class="toggle on" id="tog-badges" role="switch" aria-checked="true" aria-label="Show topic badges"></button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Compact View</div><div class="setting-desc">Collapse post previews for faster browsing</div></div>
+          <button class="toggle" id="tog-compact" role="switch" aria-checked="false" aria-label="Compact view"></button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-title">Actions</div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Clear All Favorites</div><div class="setting-desc">Remove all saved/favorited newsletters</div></div>
+          <button class="btn btn-ghost btn-sm" id="btn-clear-favs" aria-label="Clear all favorites">Clear</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Reset Used Status</div><div class="setting-desc">Mark all newsletters as unused again</div></div>
+          <button class="btn btn-ghost btn-sm" id="btn-reset-used" aria-label="Reset used status">Reset</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><div class="setting-name">Clear All Data</div><div class="setting-desc">Delete all generated newsletters</div></div>
+          <button class="btn btn-ghost btn-sm" style="color:var(--danger);border-color:rgba(255,79,106,0.3)" id="btn-clear-all" aria-label="Clear all data">Delete</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-title">About</div>
+        <div class="card">
+          <div style="display:flex;gap:var(--s2);align-items:center;margin-bottom:var(--s2)">
+            <div class="logo-mark">CT</div>
+            <div>
+              <div style="font-family:var(--font-d);font-weight:var(--fw-bold);font-size:var(--fs-md)">ChrisTechVA Newsletter Studio</div>
+              <div style="font-size:var(--fs-xs);color:var(--text2)">v2.0.2026 · PWA</div>
+            </div>
+          </div>
+          <p style="font-size:var(--fs-sm);color:var(--text2);line-height:1.7">Built for AI Workflow Automation Specialists. Generate, manage, and publish LinkedIn newsletters that build authority and attract business clients in 2026.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav id="bottom-nav" role="navigation" aria-label="Main navigation">
+    <button class="nav-item active" data-view="generator" aria-current="page" aria-label="Generator">
+      <div class="nav-icon-wrap">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      Generator
+    </button>
+    <button class="nav-item" data-view="library" aria-label="Newsletter Library">
+      <div class="nav-icon-wrap">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      Library
+    </button>
+    <button class="nav-item" data-view="topics" aria-label="Topics">
+      <div class="nav-icon-wrap">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+      </div>
+      Topics
+    </button>
+    <button class="nav-item" data-view="export" aria-label="Export">
+      <div class="nav-icon-wrap">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      Export
+    </button>
+    <button class="nav-item" data-view="settings" aria-label="Settings">
+      <div class="nav-icon-wrap">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      Settings
+    </button>
+  </nav>
+
+</div>
+
+<div id="toast" role="alert" aria-live="assertive"></div>
+<button class="fab" id="fab-top" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// NEWSLETTER DATA ENGINE
+// ══════════════════════════════════════════════════════════
+
+const TOPICS = [
+  { id:'workflow', name:'Workflow Automation', icon:'⚙️' },
+  { id:'lead-gen', name:'Lead Generation AI', icon:'🎯' },
+  { id:'ai-agents', name:'AI Agents', icon:'🤖' },
+  { id:'api', name:'API Integrations', icon:'🔗' },
+  { id:'crm', name:'CRM Automation', icon:'📊' },
+  { id:'marketing', name:'Marketing Pipelines', icon:'📣' },
+  { id:'ops', name:'Operations AI', icon:'🏭' },
+  { id:'productivity', name:'AI Productivity', icon:'⚡' },
+  { id:'audit', name:'Workflow Audits', icon:'🔍' },
+  { id:'n8n', name:'n8n Automation', icon:'🔧' },
+  { id:'startups', name:'Startups & AI', icon:'🚀' },
+  { id:'strategy', name:'AI Strategy', icon:'🧠' },
+];
+
+const TEMPLATES = {
+  workflow: [
+    {title:"The Hidden Cost of Manual Workflows",body:`Most business owners don't realize how much manual workflows are costing them—until they automate.
+
+Here's a quick calculation I use with clients at ChrisTechVA:
+
+→ If 3 team members spend 2 hours/day on data entry
+→ At $30/hour, that's $180/day
+→ $900/week → $46,800/year
+
+Just on one manual process.
+
+AI workflow automation can reduce that by 80–90%. The ROI isn't theoretical—it's measurable within weeks.
+
+The businesses winning in 2026 aren't working harder. They're systematically removing friction from every process.
+
+Start with your most repetitive task. Document it. Then ask: "What part of this never changes?"
+
+That's your first automation candidate.
+
+What's one workflow you wish you could hand off to AI today?
+
+#AIAutomation #WorkflowAutomation #BusinessEfficiency #ChrisTechVA`},
+    {title:"3 Signs Your Business Is Ready for AI Automation",body:`Not every business needs to automate everything at once. But here are 3 signs you're ready to start:
+
+✅ You or your team repeat the same tasks daily
+✅ Data lives in 3+ different systems that don't talk to each other
+✅ You've said "we need to hire for this" but the work is mostly mechanical
+
+These aren't staffing problems. They're workflow problems.
+
+At ChrisTechVA, I specialize in mapping these bottlenecks and building automation systems that eliminate them—using AI agents, n8n, and smart API integrations.
+
+The result? Your team focuses on high-value work. Your systems run 24/7 without overtime pay.
+
+Automation doesn't replace your people. It gives them back their time.
+
+Which of these signs resonates with you?
+
+#AIWorkflow #AutomationFirst #BusinessGrowth #ChrisTechVA`},
+    {title:"How AI Workflows Create Compounding Business Value",body:`The most powerful thing about AI workflow automation isn't the first win.
+
+It's the compounding.
+
+Here's what I see happen with ChrisTechVA clients after 90 days:
+
+Month 1: One automation saves 8 hours/week
+Month 2: That freed time lets you build automation #2
+Month 3: Both automations feed data into a third system
+
+Suddenly you have an integrated AI-powered operation—not just a saved spreadsheet.
+
+This is the compounding effect of systematic automation. Each workflow you remove from your plate becomes capital you reinvest into the next layer.
+
+Businesses that understand this aren't just efficient. They become structurally superior to competitors who are still doing things manually.
+
+The question isn't "Can we afford to automate?" 
+It's "Can we afford not to?"
+
+#AIStrategy #WorkflowAutomation #BusinessSystems #ChrisTechVA`},
+    {title:"The AI Workflow Audit: Where to Start",body:`Before building a single automation, do this:
+
+The 30-Minute Workflow Audit (what I run with every new ChrisTechVA client):
+
+1. List every task your team repeats more than 3x/week
+2. Circle the ones that follow the same steps every time
+3. Star the ones that involve moving data between systems
+4. Underline the ones that cause the most delays or errors
+
+Everything circled, starred, or underlined? That's your automation roadmap.
+
+Most businesses have 10–20 automatable processes they haven't touched. Not because automation is hard—because no one has mapped the opportunity yet.
+
+The map is where transformation begins.
+
+Want a free workflow audit framework? Drop "AUDIT" in the comments.
+
+#WorkflowAudit #AIAutomation #BusinessOps #ChrisTechVA`},
+    {title:"Stop Building Your Business Around Human Memory",body:`Your business shouldn't depend on someone remembering to send an email, update a spreadsheet, or follow up with a lead.
+
+That's not a process. That's a risk.
+
+At ChrisTechVA, I help businesses replace memory-dependent workflows with automated systems that:
+
+→ Trigger automatically when conditions are met
+→ Log every action without human input
+→ Escalate when something goes wrong
+→ Never forget, never sleep, never take sick days
+
+The businesses that scale in 2026 are the ones that document, automate, and delegate to AI—so their people can focus on judgment-based work that actually moves the needle.
+
+Human memory is valuable. Don't waste it on tasks a workflow can handle.
+
+What process in your business is most dependent on someone "just remembering"?
+
+#BusinessAutomation #AIWorkflow #ProcessDesign #ChrisTechVA`},
+  ],
+  'lead-gen': [
+    {title:"AI-Powered Lead Generation: The 2026 Playbook",body:`Manual lead generation is one of the highest-ROI automation opportunities for growing businesses.
+
+Here's a system I've built for ChrisTechVA clients:
+
+Step 1: AI scrapes and enriches leads from target sources (LinkedIn, directories, events)
+Step 2: Automation scores leads based on ICP criteria
+Step 3: Qualified leads are pushed directly into CRM with context notes
+Step 4: Personalized outreach sequences trigger automatically
+
+Result: A continuous lead flow that runs whether you're working or not.
+
+The difference between businesses that struggle to fill their pipeline and those that don't is often just this: one has a system. The other relies on hustle.
+
+Hustle doesn't scale. Systems do.
+
+#LeadGeneration #AIAutomation #SalesAutomation #ChrisTechVA`},
+    {title:"How to Qualify Leads with AI (Before Your Sales Team Touches Them)",body:`One of the highest-leverage automations I implement for clients at ChrisTechVA:
+
+AI-powered lead qualification before human review.
+
+Here's how it works:
+
+→ New lead comes in from any source
+→ AI enrichment pulls company size, industry, tech stack, recent news
+→ Scoring logic evaluates fit against your ideal client profile
+→ Only A+ leads get routed to your sales team
+→ B/C leads enter nurture sequences automatically
+
+The business outcome: Your sales team only talks to people who are ready and fit.
+
+No more wasted calls. No more chasing bad-fit prospects. No more missed A-tier leads buried in your inbox.
+
+This single automation can increase close rates by 30–50%.
+
+Are you manually qualifying leads right now?
+
+#LeadQualification #AIAgents #SalesAutomation #ChrisTechVA`},
+    {title:"The Lead Generation Leak Every Business Has",body:`I review a lot of business workflows at ChrisTechVA.
+
+The most common and costly mistake I see?
+
+Leads falling through the cracks between capture and follow-up.
+
+Someone fills out a form → it goes to an email inbox → that email gets buried → 3 days later someone remembers to follow up → lead is cold.
+
+AI automation seals that leak permanently.
+
+With the right workflow:
+
+✓ Lead captured → instant enrichment in under 60 seconds
+✓ CRM record created automatically
+✓ Personalized follow-up sent within 5 minutes
+✓ Sales team notified with full context
+✓ Task created if no response in 24 hours
+
+Speed is the moat. Automation gives you that speed consistently.
+
+How fast is your current lead follow-up?
+
+#LeadGen #BusinessAutomation #CRMAutomation #ChrisTechVA`},
+    {title:"Build a 24/7 Lead Machine with AI",body:`Your best salespeople sleep. Your AI-powered lead system doesn't have to.
+
+This is one of the most powerful arguments for workflow automation I share with ChrisTechVA clients:
+
+A well-built AI lead system works around the clock:
+
+🌙 2 AM: Prospect fills out a form
+→ AI enriches contact instantly
+→ Personalized email sent in 3 minutes
+→ CRM updated
+→ Follow-up sequence initiated
+→ Calendar link included if score is high
+
+You wake up to a warm, pre-qualified lead ready for a call.
+
+This isn't futuristic. It's available now. And businesses using it have a structural advantage over those who don't.
+
+Want to know the exact stack I use to build this? Comment "STACK" below.
+
+#LeadAutomation #AIWorkflow #BusinessGrowth #ChrisTechVA`},
+  ],
+  'ai-agents': [
+    {title:"AI Agents Are Not the Future. They're Right Now.",body:`The conversation about AI agents has shifted from "should we explore this?" to "how fast can we implement?"
+
+Here's what AI agents can do in your business today—not theoretically:
+
+✅ Research prospects and compile briefings before sales calls
+✅ Monitor competitor activity and surface insights
+✅ Triage customer support tickets and draft responses
+✅ Process documents and extract structured data
+✅ Coordinate multi-step workflows across tools
+
+At ChrisTechVA, I build custom AI agent workflows that integrate directly with your existing stack.
+
+The businesses that will dominate their markets in the next 24 months are deploying agents now—not waiting for the "right moment."
+
+The right moment was 6 months ago. The second best time is today.
+
+What would you have an AI agent do first in your business?
+
+#AIAgents #BusinessAutomation #AIStrategy #ChrisTechVA`},
+    {title:"The Difference Between AI Tools and AI Agents",body:`Most business owners are using AI like a better search engine.
+
+A small percentage are building AI agents that work for them autonomously.
+
+The difference matters enormously.
+
+AI Tool: You ask → It answers → You act
+AI Agent: You define a goal → It plans, executes, iterates → You review output
+
+At ChrisTechVA, I help businesses make this transition:
+
+From using AI reactively to deploying AI proactively as autonomous workers.
+
+An AI agent can:
+→ Monitor your inbox and categorize by urgency
+→ Pull data from multiple sources and produce a report
+→ Execute a 10-step workflow without a single human click
+
+This is the 2026 competitive advantage. Not having a ChatGPT subscription. Having working AI systems.
+
+Are you using AI tools or building AI agents?
+
+#AIAgents #AutomationStrategy #WorkflowAI #ChrisTechVA`},
+    {title:"How to Deploy Your First AI Agent in 48 Hours",body:`Deploying an AI agent in your business doesn't require a 3-month project.
+
+Here's the framework I use at ChrisTechVA to get clients' first AI agent running in 48 hours:
+
+Hour 1–4: Identify the target workflow
+→ Pick one repetitive, multi-step process
+→ Map inputs, steps, outputs, exceptions
+
+Hour 4–12: Build the agent logic
+→ Define the goal and constraints
+→ Connect to required data sources
+→ Set up action tools (email, CRM, Slack, etc.)
+
+Hour 12–36: Test and iterate
+→ Run test cases
+→ Handle edge cases
+→ Log and review outputs
+
+Hour 36–48: Go live with human oversight
+→ Monitor first 20–30 executions
+→ Adjust confidence thresholds
+→ Expand scope incrementally
+
+Simple, systematic, effective.
+
+What workflow would you automate first?
+
+#AIAgents #WorkflowAutomation #TechImplementation #ChrisTechVA`},
+  ],
+  api: [
+    {title:"API Integrations: The Invisible Infrastructure of Automation",body:`Behind every powerful business automation is a network of API integrations.
+
+Most business owners never think about APIs. But they're what make automation actually work.
+
+At ChrisTechVA, API integrations are often where the most value is unlocked:
+
+→ Your CRM talks to your email platform
+→ Your form tool pushes data to your project management system
+→ Your payment processor updates your customer database automatically
+→ Your calendar syncs availability across 4 platforms in real time
+
+Without APIs, automation requires manual copy-paste. With them, data flows without friction.
+
+The more integrated your stack, the more intelligent your automation becomes—because each system has full context from every other system.
+
+Most businesses use 8–15 SaaS tools that could be talking to each other but aren't.
+
+That's wasted potential. And it's fixable.
+
+#APIIntegration #WorkflowAutomation #TechStack #ChrisTechVA`},
+    {title:"You're Paying for Tools That Don't Talk to Each Other",body:`Quick question: How many apps does your team use daily?
+
+If the answer is more than 3, there's a high probability your tools aren't fully integrated—and that gap is costing you.
+
+Here's what poor integration looks like in practice:
+
+❌ Sales fills out a form. Ops never sees it until 2 days later.
+❌ A deal closes. Finance doesn't get notified automatically.
+❌ A customer emails support. Sales doesn't know about the issue on the renewal call.
+
+Every one of these is an API integration problem. And all of them are solvable.
+
+At ChrisTechVA, I audit business tool stacks and build the integrations that eliminate information silos.
+
+The result: every tool you pay for delivers full value because it's connected to your operational context.
+
+How many of your tools have unused API capabilities?
+
+#APIIntegration #BusinessSystems #AutomationStrategy #ChrisTechVA`},
+    {title:"The Best Automations Start with Good Data Architecture",body:`Here's something most automation consultants don't tell you:
+
+A bad automation built on bad data architecture will create chaos faster than manual processes ever could.
+
+Before building any workflow at ChrisTechVA, I always ask:
+
+1. Where does this data originate?
+2. How is it structured?
+3. Who else needs it, and when?
+4. What happens when it changes?
+
+These aren't technical questions. They're business questions.
+
+Great automation is 30% building the workflow and 70% understanding the data that flows through it.
+
+When your data architecture is clean—consistent naming conventions, single sources of truth, clear ownership—automation becomes effortless.
+
+When it isn't, every integration becomes a debugging nightmare.
+
+Build the foundation right. Then automate on top of it.
+
+#DataArchitecture #APIIntegration #WorkflowDesign #ChrisTechVA`},
+  ],
+  crm: [
+    {title:"Your CRM Should Work for You. Not the Other Way Around.",body:`Most businesses have a CRM that their team resents.
+
+It's not the CRM's fault. It's a workflow design problem.
+
+At ChrisTechVA, CRM automation is one of the first systems I optimize—because when it's right, every other process improves.
+
+What properly automated CRM management looks like:
+
+✓ Contacts enriched automatically on creation
+✓ Deal stages updated based on activity triggers—not manual input
+✓ Follow-up tasks created automatically when deals go quiet
+✓ Pipeline reports generated and emailed weekly without a single click
+✓ Won deals trigger onboarding workflows instantly
+
+Your sales team should spend time selling. Not updating fields.
+
+When your CRM is automated, it becomes a living intelligence system—not a data entry burden.
+
+Is your CRM helping your sales process or slowing it down?
+
+#CRMAutomation #SalesOps #WorkflowAutomation #ChrisTechVA`},
+    {title:"5 CRM Automations That Pay for Themselves in Week 1",body:`If you're only using your CRM as a contact database, you're leaving serious value on the table.
+
+These are 5 CRM automations I build for ChrisTechVA clients that show immediate ROI:
+
+1️⃣ Inbound lead auto-assignment based on territory/industry rules
+2️⃣ Deal inactivity alerts when a prospect goes quiet for 5+ days
+3️⃣ Automatic meeting notes pushed to deal record after calls
+4️⃣ Won deal → customer onboarding sequence triggered instantly
+5️⃣ Churn risk flag when engagement drops below threshold
+
+Each of these removes a manual decision or action that's easy to forget under pressure.
+
+Automation doesn't just save time. It protects revenue.
+
+Which of these would have the biggest impact on your business this week?
+
+#CRMAutomation #RevenueOps #SalesAutomation #ChrisTechVA`},
+    {title:"Turning Your CRM Data Into AI-Powered Insights",body:`Most businesses are sitting on a goldmine of CRM data and have no system to extract value from it.
+
+Here's what AI-powered CRM analysis can surface for you:
+
+→ Which lead sources have the highest close rate (not just volume)
+→ What conversation topics correlate with faster deal cycles
+→ Which clients have the highest LTV based on early signals
+→ When deals are most likely to go cold based on historical patterns
+
+At ChrisTechVA, I build AI layers on top of existing CRM data to transform passive records into active business intelligence.
+
+This isn't enterprise-only technology. It's accessible to businesses of all sizes—and it fundamentally changes how decisions get made.
+
+From gut feel to data-driven, systematically.
+
+Are you getting strategic insight from your CRM, or just using it to store contacts?
+
+#CRMAutomation #AIInsights #SalesStrategy #ChrisTechVA`},
+  ],
+  marketing: [
+    {title:"The Automated Marketing Machine: Build It Once, Run It Forever",body:`Every marketing campaign you run manually is an opportunity cost.
+
+Time spent scheduling posts, building sequences, and copying leads between platforms is time not spent on strategy, product, and clients.
+
+At ChrisTechVA, I help businesses build marketing automation pipelines that:
+
+→ Publish content on schedule across platforms—without logging in daily
+→ Nurture leads through education sequences automatically
+→ Score engagement and route hot leads to sales in real time
+→ Trigger re-engagement when contacts go cold
+→ Report weekly without a single manual pull
+
+The outcome: a marketing engine that compounds over time—creating more output with the same (or smaller) team.
+
+The businesses winning in 2026 aren't the ones with the biggest marketing teams. They're the ones with the most systematic processes.
+
+What part of your marketing still requires manual intervention every week?
+
+#MarketingAutomation #ContentStrategy #BusinessGrowth #ChrisTechVA`},
+    {title:"Stop the Content Hamster Wheel with AI",body:`Creating content consistently is exhausting when done manually.
+
+Here's the AI-powered content system I've built for ChrisTechVA clients:
+
+Step 1: AI drafts 30 content pieces from one weekly strategy session
+Step 2: Human reviews and approves (20 min total)
+Step 3: Automation schedules across LinkedIn, email, and other channels
+Step 4: Performance data feeds back into next week's strategy
+
+The result: consistent, high-quality content output with 90% less manual work.
+
+Content marketing is one of the highest-ROI activities for B2B businesses. But only if it's consistent.
+
+Consistency requires systems. Systems can be automated.
+
+You don't have a content problem. You have a content workflow problem.
+
+#ContentMarketing #AIAutomation #MarketingOps #ChrisTechVA`},
+    {title:"Email Sequences That Convert Without Your Daily Attention",body:`The most valuable marketing asset most B2B businesses have is an underutilized email list.
+
+Here's what an optimized, automated email sequence looks like at ChrisTechVA:
+
+Day 0: Welcome + value bomb (35% open rate average)
+Day 2: Problem-awareness content + case study
+Day 5: Solution framework with social proof
+Day 8: Specific use case relevant to subscriber segment
+Day 12: Soft CTA with objection handling
+Day 16: Strong offer with urgency
+Day 30: Re-engagement or list hygiene trigger
+
+Each email is segment-aware. Each sends at optimal time. All triggered automatically.
+
+This isn't just saving time. It's a revenue machine running while you focus on delivery.
+
+How many emails does your average lead receive before becoming a client?
+
+#EmailMarketing #MarketingAutomation #LeadNurture #ChrisTechVA`},
+  ],
+  ops: [
+    {title:"Operations That Run Themselves: The 2026 Standard",body:`The operational standard is changing.
+
+In 2026, the question isn't "can we automate this?" It's "why haven't we automated this yet?"
+
+At ChrisTechVA, I help operations teams:
+
+→ Automate reporting and KPI dashboards (updated in real time, no manual pulls)
+→ Build approval workflows that route, notify, and escalate automatically
+→ Create vendor communication automations that reduce back-and-forth
+→ Set up inventory and resource monitoring with AI-triggered alerts
+→ Design SOPs that are embedded into automated workflows
+
+The goal: an operations function that surfaces problems before they become crises and handles routine work without human intervention.
+
+Operational excellence used to require large teams and deep expertise. With AI automation, it requires good systems.
+
+What's the most operationally complex process in your business?
+
+#OperationsAutomation #BusinessSystems #AIWorkflow #ChrisTechVA`},
+    {title:"How to Build a Self-Reporting Business",body:`What if your business sent you a summary every morning—without you asking?
+
+This is one of my favorite automations to build at ChrisTechVA:
+
+The Daily Business Intelligence Report.
+
+What it includes:
+→ Yesterday's revenue vs. target
+→ New leads and their quality score
+→ Open deals with next actions due today
+→ Support tickets by status and priority
+→ Top 3 operational alerts
+
+How it works:
+→ Data pulled automatically from CRM, support desk, and finance tools
+→ AI summarizes and formats into readable digest
+→ Delivered to your inbox or Slack at 7 AM
+
+You start every day with complete situational awareness—without spending 45 minutes pulling reports.
+
+Information is only valuable if it reaches the right person at the right time.
+
+Would you find a daily AI business briefing valuable?
+
+#BusinessIntelligence #OperationsAI #AutomatedReporting #ChrisTechVA`},
+    {title:"The Standard Operating Procedure Revolution",body:`SOPs are critical. But most businesses treat them as static documents that get outdated and ignored.
+
+The 2026 approach: embed SOPs directly into automated workflows.
+
+Here's what this looks like in practice at ChrisTechVA:
+
+Instead of a document that says "When a new client signs, do these 7 things"...
+
+→ Contract signed → automation triggers instantly
+→ Welcome email sends in 60 seconds
+→ Onboarding task board created with all 7 steps pre-loaded
+→ Internal team notified with context
+→ Calendar invite for kickoff call sent automatically
+→ Client added to the right communication channels
+→ Day 3 check-in reminder scheduled
+
+The SOP becomes the workflow. It can't be skipped. It can't be forgotten.
+
+This is operational reliability at scale.
+
+What's the most important process in your business that still lives in a document?
+
+#SOPAutomation #BusinessOps #WorkflowDesign #ChrisTechVA`},
+  ],
+  productivity: [
+    {title:"The Productivity Multiplier Every Business Owner Needs",body:`The highest-ROI investment most business owners can make in 2026:
+
+Systematically eliminating every task that doesn't require human judgment.
+
+At ChrisTechVA, I call this the Productivity Multiplier Framework:
+
+Tier 1 — Automate completely: Repetitive, rule-based tasks with no exceptions
+Tier 2 — Automate with oversight: Complex tasks with AI-drafted output + human approval
+Tier 3 — Optimize for humans: High-judgment tasks where human insight is irreplaceable
+
+Most businesses are spending 60–70% of their time in Tier 1 and 2.
+
+That means 60–70% of your capacity is available for automation.
+
+The businesses that execute this fastest will have structural productivity advantages that compound every quarter.
+
+Where does most of your work time go right now?
+
+#Productivity #AIAutomation #BusinessStrategy #ChrisTechVA`},
+    {title:"AI Assistants vs. AI Systems: Know the Difference",body:`There's a misconception I encounter often with new ChrisTechVA clients:
+
+"We already use AI. We have ChatGPT."
+
+Using a conversational AI assistant is valuable. But it's not the same as having AI systems.
+
+Here's the distinction:
+
+AI Assistant: You prompt → You get output → You manually apply it
+AI System: Event happens → AI processes → Output delivered where it's needed
+
+One is a productivity tool. The other is operational infrastructure.
+
+Businesses that only use AI assistants are still dependent on human initiation for every AI interaction.
+
+Businesses with AI systems have autonomous processes that run, adapt, and deliver—without someone typing a prompt.
+
+The goal in 2026 isn't to use AI. It's to operate through AI.
+
+Where are you on this spectrum?
+
+#AIStrategy #AutomationSystems #ProductivityAI #ChrisTechVA`},
+    {title:"Get 3 Extra Hours Back Every Day with These Automations",body:`3 hours/day. 15 hours/week. 780 hours/year.
+
+That's what the right automation stack can realistically return to a business owner or executive.
+
+Here's where those hours typically come from in ChrisTechVA engagements:
+
+📧 Email management automation: 45 min/day
+→ AI triages, categorizes, drafts responses for low-stakes emails
+
+📊 Reporting: 30 min/day
+→ Automated dashboards replace manual data pulls
+
+📅 Scheduling: 20 min/day
+→ AI scheduling assistant + calendar automation
+
+📋 Task assignment: 25 min/day
+→ Workflow rules route work automatically
+
+📱 Status updates: 20 min/day
+→ Automated project status reports to stakeholders
+
+That's 2 hours 20 minutes. Right there.
+
+Which of these would have the most immediate impact for you?
+
+#TimeManagement #AIProductivity #WorkflowAutomation #ChrisTechVA`},
+  ],
+  audit: [
+    {title:"The Automation Audit: Why Every Business Needs One",body:`Before recommending any automation, I always run a structured workflow audit.
+
+This is step one of every ChrisTechVA engagement. Here's why:
+
+Most businesses build automations reactively—solving the loudest problem instead of the most impactful one.
+
+A proper audit reveals:
+
+🔍 Which processes consume the most human time
+🔍 Where errors occur most frequently (and why)
+🔍 What data flows between systems—and what breaks that flow
+🔍 Which tools are underutilized despite active subscriptions
+🔍 Where the highest-ROI automation opportunities actually are
+
+Without this map, you're guessing. With it, you're investing.
+
+The businesses that see the fastest ROI from automation aren't the ones that build the most. They're the ones that audit first and build strategically.
+
+When did you last take a critical look at your business workflows?
+
+#WorkflowAudit #ProcessOptimization #BusinessStrategy #ChrisTechVA`},
+    {title:"7 Questions Every Business Owner Should Ask About Their Workflows",body:`Before any automation project at ChrisTechVA, I ask clients these 7 diagnostic questions:
+
+1. Which tasks are done the same way every single time?
+2. Which processes require the most back-and-forth communication?
+3. Where does work get "stuck" most often, and why?
+4. Which team members spend the most time on low-judgment work?
+5. What data do you manually move between systems regularly?
+6. Where do errors most frequently occur, and what causes them?
+7. What would you automate first if cost and time weren't constraints?
+
+The answers reveal an automation roadmap most businesses don't know they have.
+
+Save this list. Answer these questions with your leadership team.
+
+Then build automations in order of impact, not in order of ease.
+
+What question on this list is most revealing for your business?
+
+#WorkflowAudit #ProcessImprovement #AIStrategy #ChrisTechVA`},
+    {title:"Why Your Old Processes Can't Support Your New Growth",body:`The processes that got your business to $500K won't get you to $2M.
+
+This is a conversation I have regularly at ChrisTechVA.
+
+As businesses scale, the manual processes that "worked fine" start creating:
+→ Inconsistent output quality
+→ Communication bottlenecks
+→ Longer cycle times
+→ Higher error rates
+→ Team burnout
+
+These aren't people problems. They're process problems.
+
+And the solution isn't always hiring. Often it's redesigning workflows to support the new volume.
+
+AI automation allows you to scale your operational capacity without proportionally scaling your headcount.
+
+The audit is always step one. Because you can't optimize what you haven't mapped.
+
+Is your business running on processes designed for your current size—or your previous one?
+
+#ScalingBusiness #ProcessOptimization #AIAutomation #ChrisTechVA`},
+  ],
+  n8n: [
+    {title:"Why n8n Is One of the Most Powerful Tools in My Automation Stack",body:`When clients ask me at ChrisTechVA what tools I use most often to build automation systems, n8n is always near the top.
+
+Here's why:
+
+→ Visual workflow builder that non-developers can understand
+→ 400+ native integrations to business tools
+→ Can run locally or in the cloud for data privacy compliance
+→ Handles complex conditional logic without custom code
+→ Connects to AI APIs for intelligent, adaptive workflows
+→ Free and open-source core (significant cost advantage)
+
+I've used n8n to build everything from simple lead routing workflows to complex AI-powered agent systems that process hundreds of inputs daily.
+
+For businesses that want real automation power without enterprise software pricing, it's transformative.
+
+The tool isn't magic. The workflow design behind it is.
+
+Have you explored n8n for your business automation needs?
+
+#n8n #WorkflowAutomation #NoCode #ChrisTechVA`},
+    {title:"5 n8n Workflows That Every Business Should Have",body:`After building dozens of automation systems at ChrisTechVA, these are the n8n workflows that deliver consistent ROI across almost every business type:
+
+1️⃣ Lead capture → CRM enrichment → follow-up sequence
+(The core revenue protection workflow)
+
+2️⃣ Support ticket triage → AI categorization → routed response
+(Reduces first response time by 80%+)
+
+3️⃣ New client → onboarding task board → team notification
+(Ensures flawless onboarding every time)
+
+4️⃣ Daily data pull → AI summary → Slack/email digest
+(Replaces manual reporting entirely)
+
+5️⃣ Social mention / form submission → logged + alerts
+(Real-time business intelligence)
+
+Each of these can be built in n8n in hours—not weeks.
+
+Which workflow would have the most immediate impact on your operations?
+
+#n8nAutomation #WorkflowDesign #BusinessAutomation #ChrisTechVA`},
+    {title:"The Power of Visual Workflow Automation for Non-Technical Teams",body:`One of the biggest barriers to automation adoption I see at ChrisTechVA?
+
+Business owners who assume automation requires a developer.
+
+n8n changed that.
+
+The visual workflow interface means that once I build the initial system, client teams can:
+
+→ Understand exactly how their automations work
+→ Modify simple logic without touching code
+→ Add new workflow steps using drag-and-drop
+→ Troubleshoot issues using visual execution logs
+→ Maintain ownership of their automation infrastructure
+
+This is a fundamental shift from "we need IT to change this" to "we can evolve this ourselves."
+
+Automation should empower your team, not create dependency on external developers.
+
+That's the design philosophy behind everything I build for clients.
+
+Is your current automation stack something your team fully understands and owns?
+
+#n8nWorkflow #VisualAutomation #BusinessTech #ChrisTechVA`},
+  ],
+  startups: [
+    {title:"Why Startups That Automate Early Win Later",body:`Early-stage startups have a superpower most don't use: the ability to build automation-first from day one.
+
+At ChrisTechVA, I've seen two types of scaling startups:
+
+Type A: Builds manual processes, plans to automate "when we have time"
+Type B: Builds automation-first, even if early workflows are simple
+
+Type B companies don't just operate more efficiently. They build organizations where scale doesn't break things.
+
+When Type A hits growth, they scramble to retrofit automation into processes designed for manual work. It's costly, slow, and frustrating.
+
+When Type B hits growth, their systems scale with them—often without adding headcount.
+
+The best time to build automation-first was at founding. The second best time is today.
+
+Is your startup building processes designed to scale, or designed for now?
+
+#StartupGrowth #AIAutomation #FounderOps #ChrisTechVA`},
+    {title:"The Lean Startup Stack: 5 Automations That Replace Hires",body:`A recurring conversation at ChrisTechVA with early-stage founders:
+
+"We need to hire for this."
+
+Sometimes that's true. But often, the task in question is automatable.
+
+5 automations that frequently replace early hires in lean startups:
+
+1. AI-powered customer support triage (replaces early CS hire)
+2. Automated onboarding sequences (replaces manual onboarding specialist)
+3. Lead enrichment and scoring (replaces SDR for first-touch qualification)
+4. Automated invoicing and payment reminders (replaces manual AR follow-up)
+5. Weekly reporting digest (replaces operations analyst time)
+
+Each of these costs a fraction of a salary and runs 24/7.
+
+This isn't about eliminating jobs. It's about not hiring for automation-solvable problems when every dollar counts.
+
+Which of these could you implement in the next 2 weeks?
+
+#StartupOps #AIAutomation #LeanStartup #ChrisTechVA`},
+    {title:"Compete with Enterprises on 10% of the Budget",body:`One of the most exciting things about AI automation for startups in 2026:
+
+The playing field is being leveled.
+
+A 5-person startup with the right automation stack can now deliver the operational capability of a 20-person team.
+
+Here's how ChrisTechVA clients are doing it:
+
+→ AI agents handling research, drafting, and analysis tasks
+→ Automated pipelines replacing manual coordination
+→ Smart integrations giving complete data visibility
+→ AI-powered customer communication at scale
+→ Automated reporting replacing analyst bandwidth
+
+The enterprises you compete with are often slowed by bureaucracy, legacy systems, and internal politics.
+
+You have none of those constraints. And you can move faster.
+
+Your size isn't a disadvantage. It's an advantage—if you build systems that amplify your team's capacity.
+
+How is your startup using AI to punch above its weight?
+
+#StartupStrategy #AIAutomation #CompetitiveAdvantage #ChrisTechVA`},
+  ],
+  strategy: [
+    {title:"The AI Automation Maturity Model: Where Does Your Business Stand?",body:`Not all businesses are at the same stage of AI automation. Knowing where you are is the first step to advancing.
+
+At ChrisTechVA, I use a 5-stage maturity model:
+
+Stage 1 — Manual: All processes are human-executed
+Stage 2 — Tool-assisted: Using SaaS tools but no integrations
+Stage 3 — Integrated: Tools connected via APIs, data flows automatically
+Stage 4 — Automated: Workflows triggered without human initiation
+Stage 5 — Intelligent: AI agents making adaptive decisions within workflows
+
+Most businesses I audit are at Stage 2–3.
+
+The jump from Stage 3 to 4 is where the biggest efficiency gains happen.
+
+The jump from Stage 4 to 5 is where competitive moats are built.
+
+Where is your business on this model?
+
+#AIStrategy #AutomationMaturity #BusinessTransformation #ChrisTechVA`},
+    {title:"Why AI Automation Is a Strategy, Not a Tool",body:`The biggest mistake I see businesses make when exploring AI automation:
+
+Treating it as a tool to add to their stack.
+
+AI automation isn't a tool. It's a strategy.
+
+A strategy for how work gets done. A strategy for how information flows. A strategy for where human attention is directed.
+
+At ChrisTechVA, I work with clients to develop an Automation Strategy—not just implement point solutions.
+
+This means:
+
+→ Mapping the entire operational model first
+→ Identifying highest-leverage automation opportunities
+→ Sequencing implementation for compounding returns
+→ Building governance and oversight frameworks
+→ Creating a culture of automation-first thinking
+
+Businesses that approach AI automation strategically see 3–5x the ROI of those that implement it tactically.
+
+Does your business have an automation strategy?
+
+#AIStrategy #BusinessTransformation #OperationalExcellence #ChrisTechVA`},
+    {title:"The 5 Automation Priorities for 2026 Business Leaders",body:`If you're a founder or executive mapping your AI automation investments for 2026, here's the priority framework I use at ChrisTechVA:
+
+Priority 1: Revenue protection automations
+→ Anything that prevents lead leakage or client churn
+
+Priority 2: Operational reliability automations
+→ Processes that must happen the same way every time
+
+Priority 3: Intelligence automations
+→ Automated reporting and data synthesis
+
+Priority 4: Scale automations
+→ Workflows that let you grow without proportional hiring
+
+Priority 5: Innovation automations
+→ AI systems that create new capabilities you don't currently have
+
+Build in this order. Protect revenue first. Then optimize. Then scale.
+
+Most businesses get this backwards—pursuing complexity before securing the basics.
+
+Which priority is most urgent for your business right now?
+
+#BusinessStrategy #AIAutomation #ExecutiveLeadership #ChrisTechVA`},
+    {title:"The ROI Framework for AI Automation Investment",body:`Every automation investment at ChrisTechVA is evaluated against a clear ROI framework.
+
+Here's how to calculate it for your business:
+
+Step 1: Time Cost
+→ Hours per week spent on the process × hourly cost
+→ Multiply by 52 for annual cost
+
+Step 2: Error Cost
+→ Average cost per error × error frequency per year
+→ Include cost of correction, rework, client impact
+
+Step 3: Opportunity Cost
+→ What could those hours produce if redirected?
+→ Conservative revenue value of recovered capacity
+
+Step 4: Automation Cost
+→ Build cost + monthly tool/maintenance cost
+→ Annualized over 3 years
+
+ROI = (Time Cost + Error Cost + Opportunity Cost) / Automation Cost
+
+Most well-designed automations return 300–800% ROI in year one.
+
+The businesses not automating aren't saving money. They're spending it differently.
+
+#ROI #AutomationStrategy #BusinessCase #ChrisTechVA`},
+  ],
+};
+
+// ══════════════════════════════════════════════════════════
+// STATE MODULE
+// ══════════════════════════════════════════════════════════
+const State = (() => {
+  let newsletters = [];
+  let favorites = new Set();
+  let usedSet = new Set();
+  let settings = { showNumbers: true, showBadges: true, compact: false };
+  const STORE_KEY = 'ctva_nl_v3';
+
+  function save() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        newsletters: newsletters.map(n => ({ ...n, fav: favorites.has(n.id), used: usedSet.has(n.id) })),
+        settings
+      }));
+    } catch(e) {}
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      newsletters = data.newsletters || [];
+      settings = { ...settings, ...(data.settings || {}) };
+      newsletters.forEach(n => {
+        if (n.fav) favorites.add(n.id);
+        if (n.used) usedSet.add(n.id);
+      });
+    } catch(e) {}
+  }
+
+  return {
+    get newsletters() { return newsletters; },
+    get settings() { return settings; },
+    setNewsletters(arr) { newsletters = arr; save(); },
+    toggleFav(id) {
+      favorites.has(id) ? favorites.delete(id) : favorites.add(id);
+      save();
+    },
+    toggleUsed(id) {
+      usedSet.has(id) ? usedSet.delete(id) : usedSet.add(id);
+      save();
+    },
+    isFav(id) { return favorites.has(id); },
+    isUsed(id) { return usedSet.has(id); },
+    clearFavs() { favorites.clear(); save(); },
+    resetUsed() { usedSet.clear(); save(); },
+    clearAll() { newsletters = []; favorites.clear(); usedSet.clear(); save(); },
+    updateSettings(key, val) { settings[key] = val; save(); },
+    favCount() { return favorites.size; },
+    usedCount() { return usedSet.size; },
+    load
+  };
+})();
+
+// ══════════════════════════════════════════════════════════
+// NEWSLETTER GENERATOR ENGINE
+// ══════════════════════════════════════════════════════════
+const Generator = (() => {
+  let idCounter = 0;
+
+  function generateId() { return `nl_${++idCounter}_${Date.now()}`; }
+
+  // Expanded content variations
+  const openings = [
+    "Most business owners don't realize",
+    "Here's a question I get asked weekly at ChrisTechVA:",
+    "The conversation is shifting fast.",
+    "Before building any automation, I always ask my clients:",
+    "There's a pattern I see in every high-growth business I work with.",
+    "Let me share something I've seen in dozens of ChrisTechVA engagements:",
+    "The number one mistake businesses make with AI:",
+    "If you're serious about scaling in 2026, start here:",
+    "This week's insight from ChrisTechVA:",
+    "Quick diagnostic question for founders and operators:",
+    "Something counterintuitive about AI automation:",
+    "The businesses winning right now all have one thing in common:",
+    "Here's the uncomfortable truth about manual processes:",
+    "A framework I use with every ChrisTechVA client:",
+    "What separates AI-powered businesses from the rest?",
+  ];
+
+  const closings = [
+    "What's one workflow you'd hand off to AI this week?\n\n#AIAutomation #WorkflowAutomation #BusinessGrowth #ChrisTechVA",
+    "Drop your biggest automation challenge in the comments.\n\n#ChrisTechVA #AIWorkflow #BusinessEfficiency #Automation",
+    "Ready to audit your workflows? Let's connect.\n\n#ChrisTechVA #AIStrategy #WorkflowDesign #BusinessOps",
+    "What would you build first?\n\n#AIAgents #WorkflowAutomation #BusinessSystems #ChrisTechVA",
+    "Is your business ready for this shift?\n\n#ChrisTechVA #AIAutomation #FutureOfWork #BusinessStrategy",
+    "Share this if it resonates with a founder you know.\n\n#ChrisTechVA #LinkedInForBusiness #AIWorkflow #Automation",
+    "Which stage are you at? Tell me in the comments.\n\n#ChrisTechVA #AIMaturity #BusinessTransformation #AutomationStrategy",
+    "This is solvable. Let's talk.\n\n#ChrisTechVA #WorkflowAutomation #BusinessGrowth #AIConsulting",
+    "The ROI is real. The tools are available. The time is now.\n\n#ChrisTechVA #AIAutomation #BusinessROI #WorkflowOptimization",
+    "What's holding your team back from automating this?\n\n#ChrisTechVA #AIWorkflow #ProcessImprovement #BusinessLeadership",
+  ];
+
+  const midPoints = [
+    "\nAt ChrisTechVA, I've seen this pattern across dozens of client businesses.",
+    "\nThis is exactly the kind of system ChrisTechVA specializes in building.",
+    "\nIn every ChrisTechVA workflow audit, this emerges as a top-three priority.",
+    "\nWhen I work with clients at ChrisTechVA, this is often the first question we answer together.",
+    "\nChrisTechVA clients who implement this typically see results within 30 days.",
+    "\nThis is the core of what ChrisTechVA delivers: systems that work while you focus on growth.",
+    "\nThe ChrisTechVA approach: map it, automate it, monitor it, improve it.",
+  ];
+
+  function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function generateFromTemplate(topicId, template, index) {
+    const topic = TOPICS.find(t => t.id === topicId);
+    return {
+      id: generateId(),
+      index,
+      title: template.title,
+      body: template.body,
+      topic: topicId,
+      topicName: topic?.name || topicId,
+      tags: [topicId, 'ai-automation', 'linkedin-2026'],
+      fav: false,
+      used: false,
+    };
+  }
+
+  function generateVariant(topicId, baseTemplate, variantIndex, globalIndex) {
+    const topic = TOPICS.find(t => t.id === topicId);
+    const opening = pickRandom(openings);
+    const closing = pickRandom(closings);
+    const midPoint = pickRandom(midPoints);
+
+    const variantTitles = {
+      'workflow': ["Why Workflow Automation Is a Competitive Necessity","The True Cost of Your Manual Processes","How to Map Your Automation Roadmap","Workflow Bottlenecks Are Profit Leaks","Building Business Infrastructure with AI","Systems That Scale Without Hiring","Removing Friction from Every Process","The Efficiency Advantage in 2026","Why Your Competitors Are Moving Faster","Systematic Automation for Sustained Growth","The Automation Stack That Changes Everything","From Manual to Autonomous: The Transition","Workflow Design as a Strategic Asset","AI-Powered Operations: The New Standard","Stop Optimizing. Start Automating."],
+      'lead-gen': ["Turning Lead Gen into a System","Why Your Pipeline Leaks (And How to Fix It)","The Lead Machine That Works at 3 AM","AI-Powered Prospect Research at Scale","From Cold Lead to Warm Conversation Automatically","The Lead Qualification System That Converts","Why Speed-to-Lead Determines Your Win Rate","Building a Predictable Outbound Engine","AI Enrichment: The Lead Gen Superpower","Stop Relying on Referrals Alone"],
+      'ai-agents': ["Your Business Needs an AI Workforce","Deploying AI Agents for Real Business Outcomes","How AI Agents Handle What Humans Shouldn't","The Agent Economy for SMBs","Building Your First Autonomous Business System","AI Agents: Beyond the Hype, Into Practice","What Multi-Agent Systems Can Do for Your Business","The Autonomous Enterprise in 2026","AI Agents as Operational Staff","Why Every Department Needs an AI Agent"],
+      'api': ["APIs: The Plumbing of Automation","Connect Your Stack, Unlock Your Data","Why Your Tools Need to Talk","The API-First Business Advantage","Building the Integration Layer","Data Flow Is Business Flow","Eliminating Data Silos Forever","Every Integration Is an Opportunity","The Connected Business in 2026","API Strategy for Non-Technical Leaders"],
+      'crm': ["The CRM That Runs Itself","Sales Without Manual CRM Entry","Turn Your CRM Into a Revenue Machine","AI-Powered Pipeline Management","Why CRM Data Is Your Most Valuable Asset","Automated Deal Intelligence","CRM Automation for High-Growth Teams","The Follow-Up System That Never Forgets","Relationship Data at Scale","Winning Deals with Automated Context"],
+      'marketing': ["Marketing Automation That Compounds","The Content System That Scales","Automated Campaigns That Convert","Marketing Pipelines Built for 2026","AI in Every Stage of Your Funnel","Build Once, Market Forever","The Nurture Sequence That Sells","Smart Segmentation with AI","Marketing Ops for Lean Teams","Your Audience Is Waiting for Consistency"],
+      'ops': ["Operations That Outperform","Building the Self-Running Business","Automated Reporting, Zero Surprises","Ops Excellence Without the Overhead","The Alert System for Business Health","Process Reliability at Scale","Standard Ops, Exceptional Results","Business Intelligence Without Analysts","The Ops Stack for 2026","AI-Powered Exception Management"],
+      'productivity': ["Reclaim Your Highest-Value Hours","The Productivity Stack That Compounds","Eliminating Low-Value Work Systematically","AI as Your Productivity Infrastructure","From Busy to Effective with Automation","The 10x Operator Mindset","Automated Delegation That Actually Works","Focused Work Requires Automated Context","The Time Leverage of AI Systems","Building Your Productivity Multiplier"],
+      'audit': ["The Audit That Changes Everything","Your Workflow Holds the Answers","Map Before You Automate","Finding the Hidden Value in Your Operations","The 60-Minute Business Diagnostic","Audit-First, Build-Second: Why It Matters","What Your Workflows Reveal About Growth","Process Intelligence as Competitive Advantage","Before the Automation, the Audit","The Questions That Unlock Efficiency"],
+      'n8n': ["Why n8n Is the Automation Platform for 2026","Building Visual Workflows That Actually Work","n8n: The Tool That Changes What's Possible","Connecting Everything with n8n","Advanced Workflow Design in n8n","n8n + AI: The Automation Stack","No-Code Automation for Complex Processes","Why I Build Most Client Systems in n8n","n8n Workflows for Non-Technical Teams","The Open-Source Automation Advantage"],
+      'startups': ["Build Automation-First from Day One","The Startup Ops Playbook for 2026","Scale Without the Headcount","Automation as Startup Infrastructure","Why Lean Teams Need Smart Systems","The Founder's Automation Stack","Early-Stage Automation Decisions That Pay Off Later","Competing Smarter with AI","The Startup Advantage in the AI Era","Building the Scalable Foundation"],
+      'strategy': ["AI Automation Is a Strategy, Not a Feature","Where to Start Your Automation Journey","The Automation Roadmap for Business Leaders","Building the AI-Powered Organization","Strategic AI: Beyond Tool Adoption","The Maturity Model for Business Automation","Sequencing Your Automation Investments","From Tactical to Strategic Automation","Why Automation Strategy Precedes Automation Tactics","The Executive's Guide to AI Automation"],
+    };
+
+    const titles = variantTitles[topicId] || variantTitles['strategy'];
+    const title = titles[variantIndex % titles.length] || baseTemplate.title;
+
+    // Build variant body from components
+    const bodyParts = baseTemplate.body.split('\n\n');
+    const midIdx = Math.floor(bodyParts.length / 2);
+    bodyParts.splice(midIdx, 0, midPoint);
+    const body = bodyParts.join('\n\n').split('\n\n').slice(0, -1).join('\n\n') + '\n\n' + closing;
+
+    return {
+      id: generateId(),
+      index: globalIndex,
+      title,
+      body,
+      topic: topicId,
+      topicName: topic?.name || topicId,
+      tags: [topicId, 'ai-automation', 'linkedin-2026'],
+      fav: false,
+      used: false,
+    };
+  }
+
+  async function generate(count, onProgress) {
+    idCounter = 0;
+    const newsletters = [];
+    let globalIndex = 0;
+
+    // Collect all templates first
+    const allTemplates = [];
+    for (const [topicId, tpls] of Object.entries(TEMPLATES)) {
+      tpls.forEach(tpl => allTemplates.push({ topicId, tpl }));
+    }
+
+    const targetPerTopic = Math.ceil(count / TOPICS.length);
+
+    for (let t = 0; t < TOPICS.length; t++) {
+      const topic = TOPICS[t];
+      const topicTemplates = TEMPLATES[topic.id] || [];
+      let added = 0;
+
+      // Add base templates
+      for (const tpl of topicTemplates) {
+        if (newsletters.length >= count) break;
+        newsletters.push(generateFromTemplate(topic.id, tpl, ++globalIndex));
+        added++;
+      }
+
+      // Generate variants to fill quota
+      let variantIdx = 0;
+      while (added < targetPerTopic && newsletters.length < count) {
+        const baseTemplate = topicTemplates[variantIdx % topicTemplates.length] || topicTemplates[0];
+        if (!baseTemplate) break;
+        newsletters.push(generateVariant(topic.id, baseTemplate, variantIdx, ++globalIndex));
+        variantIdx++;
+        added++;
+      }
+
+      const progress = ((t + 1) / TOPICS.length) * 100;
+      if (onProgress) onProgress(progress, `Generating ${topic.name} newsletters...`);
+      await new Promise(r => setTimeout(r, 30));
+    }
+
+    // Pad if needed
+    while (newsletters.length < count) {
+      const randTopic = TOPICS[newsletters.length % TOPICS.length];
+      const tpls = TEMPLATES[randTopic.id];
+      if (!tpls?.length) { newsletters.push({...newsletters[newsletters.length-1], id: generateId(), index: ++globalIndex}); continue; }
+      newsletters.push(generateVariant(randTopic.id, tpls[0], newsletters.length, ++globalIndex));
+    }
+
+    return newsletters.slice(0, count);
+  }
+
+  return { generate };
+})();
+
+// ══════════════════════════════════════════════════════════
+// UI ATOMS
+// ══════════════════════════════════════════════════════════
+const UI = (() => {
+  function toast(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `show ${type}`;
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.className = '', 2800);
+  }
+
+  function svgIcon(name, size = 16) {
+    const icons = {
+      copy: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+      star: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+      'star-filled': `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="#2EBF91" stroke="#2EBF91" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+      check: `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+      'check-filled': `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    };
+    return icons[name] || '';
+  }
+
+  return { toast, svgIcon };
+})();
+
+// ══════════════════════════════════════════════════════════
+// NEWSLETTER CARD COMPONENT
+// ══════════════════════════════════════════════════════════
+function renderNewsletterCard(nl) {
+  const isFav = State.isFav(nl.id);
+  const isUsed = State.isUsed(nl.id);
+  const showNumbers = State.settings.showNumbers;
+  const showBadges = State.settings.showBadges;
+  const compact = State.settings.compact;
+  const topic = TOPICS.find(t => t.id === nl.topic);
+
+  const card = document.createElement('article');
+  card.className = `nl-card${isFav ? ' favorited' : ''}${isUsed ? ' used' : ''}`;
+  card.setAttribute('role', 'listitem');
+  card.setAttribute('aria-label', `Newsletter: ${nl.title}`);
+
+  const bodyPreview = compact ? nl.body.slice(0, 120) + (nl.body.length > 120 ? '…' : '') : nl.body;
+
+  card.innerHTML = `
+    <div class="nl-card-header">
+      <div class="nl-meta">
+        ${showNumbers ? `<div class="nl-num">#${String(nl.index).padStart(3,'0')}</div>` : ''}
+        <div class="nl-title">${escapeHtml(nl.title)}</div>
+      </div>
+      ${showBadges ? `<div class="nl-badge topic-badge" aria-label="Topic: ${nl.topicName}">${topic?.icon || ''} ${nl.topicName}</div>` : ''}
+    </div>
+    <div class="nl-body" aria-label="Newsletter content">${escapeHtml(bodyPreview)}</div>
+    <div class="nl-footer">
+      <div class="nl-tags" aria-label="Tags">
+        ${nl.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+      </div>
+      <div class="nl-actions">
+        <button class="btn-icon btn-fav${isFav ? ' active' : ''}" data-id="${nl.id}" aria-label="${isFav ? 'Remove from favorites' : 'Save to favorites'}" aria-pressed="${isFav}" title="${isFav ? 'Remove from favorites' : 'Save to favorites'}">
+          ${isFav ? UI.svgIcon('star-filled') : UI.svgIcon('star')}
+        </button>
+        <button class="btn-icon btn-used${isUsed ? ' active' : ''}" data-id="${nl.id}" aria-label="${isUsed ? 'Mark as unused' : 'Mark as used'}" aria-pressed="${isUsed}" title="${isUsed ? 'Mark as unused' : 'Mark as used'}">
+          ${isUsed ? UI.svgIcon('check-filled') : UI.svgIcon('check')}
+        </button>
+        <button class="btn-icon btn-copy" data-id="${nl.id}" aria-label="Copy newsletter to clipboard" title="Copy to clipboard">
+          ${UI.svgIcon('copy')}
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Event handlers
+  card.querySelector('.btn-fav').addEventListener('click', () => {
+    State.toggleFav(nl.id);
+    updateStats();
+    // Re-render card in place
+    const newCard = renderNewsletterCard(nl);
+    card.replaceWith(newCard);
+  });
+
+  card.querySelector('.btn-used').addEventListener('click', () => {
+    State.toggleUsed(nl.id);
+    updateStats();
+    const newCard = renderNewsletterCard(nl);
+    card.replaceWith(newCard);
+  });
+
+  card.querySelector('.btn-copy').addEventListener('click', async () => {
+    const text = `${nl.title}\n\n${nl.body}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      UI.toast('✓ Copied to clipboard!', 'success');
+    } catch {
+      // Fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      UI.toast('✓ Copied!', 'success');
+    }
+  });
+
+  return card;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ══════════════════════════════════════════════════════════
+// LIBRARY MODULE
+// ══════════════════════════════════════════════════════════
+const Library = (() => {
+  const PER_PAGE = 20;
+  let currentPage = 1;
+  let filtered = [];
+
+  function getFiltered() {
+    const query = document.getElementById('search-input')?.value.toLowerCase() || '';
+    const topicFilter = document.getElementById('filter-topic')?.value || '';
+    const statusFilter = document.getElementById('filter-status')?.value || '';
+
+    return State.newsletters.filter(nl => {
+      if (query && !nl.title.toLowerCase().includes(query) && !nl.body.toLowerCase().includes(query)) return false;
+      if (topicFilter && nl.topic !== topicFilter) return false;
+      if (statusFilter === 'favorited' && !State.isFav(nl.id)) return false;
+      if (statusFilter === 'used' && !State.isUsed(nl.id)) return false;
+      if (statusFilter === 'unused' && State.isUsed(nl.id)) return false;
+      return true;
+    });
+  }
+
+  function render() {
+    filtered = getFiltered();
+    const list = document.getElementById('library-list');
+    const shown = document.getElementById('results-shown');
+    const total = document.getElementById('results-total');
+    if (!list) return;
+
+    if (!State.newsletters.length) {
+      list.innerHTML = `<div class="empty-state"><span class="empty-icon">📭</span><div class="empty-title">No newsletters yet</div><div class="empty-sub">Go to Generator tab and create your first batch of newsletters</div></div>`;
+      if (shown) shown.textContent = '0';
+      if (total) total.textContent = '0';
+      renderPagination(0);
+      return;
+    }
+
+    if (!filtered.length) {
+      list.innerHTML = `<div class="empty-state"><span class="empty-icon">🔍</span><div class="empty-title">No results found</div><div class="empty-sub">Try adjusting your search or filters</div></div>`;
+      if (shown) shown.textContent = '0';
+      if (total) total.textContent = State.newsletters.length;
+      renderPagination(0);
+      return;
+    }
+
+    const startIdx = (currentPage - 1) * PER_PAGE;
+    const pageItems = filtered.slice(startIdx, startIdx + PER_PAGE);
+
+    if (shown) shown.textContent = filtered.length;
+    if (total) total.textContent = State.newsletters.length;
+
+    list.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    pageItems.forEach(nl => frag.appendChild(renderNewsletterCard(nl)));
+    list.appendChild(frag);
+
+    renderPagination(filtered.length);
+  }
+
+  function renderPagination(total) {
+    const pag = document.getElementById('pagination');
+    if (!pag) return;
+    const totalPages = Math.ceil(total / PER_PAGE);
+    if (totalPages <= 1) { pag.innerHTML = ''; return; }
+
+    let html = `<button class="page-btn${currentPage === 1 ? ' disabled' : ''}" data-page="${currentPage - 1}" aria-label="Previous page">‹</button>`;
+    const maxShow = 5;
+    let start = Math.max(1, currentPage - 2);
+    let end = Math.min(totalPages, start + maxShow - 1);
+    if (end - start < maxShow - 1) start = Math.max(1, end - maxShow + 1);
+
+    if (start > 1) html += `<button class="page-btn" data-page="1">1</button>${start > 2 ? '<span class="page-info">…</span>' : ''}`;
+    for (let i = start; i <= end; i++) html += `<button class="page-btn${i === currentPage ? ' active' : ''}" data-page="${i}" aria-label="Page ${i}" aria-current="${i === currentPage ? 'page' : 'false'}">${i}</button>`;
+    if (end < totalPages) html += `${end < totalPages - 1 ? '<span class="page-info">…</span>' : ''}<button class="page-btn" data-page="${totalPages}">${totalPages}</button>`;
+    html += `<button class="page-btn${currentPage === totalPages ? ' disabled' : ''}" data-page="${currentPage + 1}" aria-label="Next page">›</button>`;
+    pag.innerHTML = html;
+
+    pag.querySelectorAll('.page-btn:not(.disabled)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentPage = parseInt(btn.dataset.page);
+        render();
+        document.getElementById('view-library')?.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  }
+
+  function resetPage() { currentPage = 1; }
+  function populateFilters() {
+    const sel = document.getElementById('filter-topic');
+    if (!sel) return;
+    sel.innerHTML = '<option value="">All Topics</option>' + TOPICS.map(t => `<option value="${t.id}">${t.icon} ${t.name}</option>`).join('');
+  }
+
+  return { render, resetPage, populateFilters };
+})();
+
+// ══════════════════════════════════════════════════════════
+// TOPICS MODULE
+// ══════════════════════════════════════════════════════════
+const Topics = (() => {
+  let activeTopicId = null;
+
+  function renderTopicsGrid() {
+    const grid = document.getElementById('topics-grid');
+    if (!grid) return;
+
+    grid.innerHTML = TOPICS.map(topic => {
+      const count = State.newsletters.filter(n => n.topic === topic.id).length;
+      return `<div class="topic-card${activeTopicId === topic.id ? ' active' : ''}" data-topic="${topic.id}" role="listitem" tabindex="0" aria-label="${topic.name}: ${count} newsletters" aria-pressed="${activeTopicId === topic.id}">
+        <span class="topic-icon" aria-hidden="true">${topic.icon}</span>
+        <div class="topic-name">${topic.name}</div>
+        <div class="topic-count">${count} posts</div>
+      </div>`;
+    }).join('');
+
+    grid.querySelectorAll('.topic-card').forEach(card => {
+      const activate = () => {
+        const id = card.dataset.topic;
+        activeTopicId = activeTopicId === id ? null : id;
+        renderTopicsGrid();
+        renderTopicFiltered();
+      };
+      card.addEventListener('click', activate);
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+    });
+  }
+
+  function renderTopicFiltered() {
+    const list = document.getElementById('topic-filtered-list');
+    if (!list) return;
+    if (!activeTopicId) { list.innerHTML = ''; return; }
+
+    const items = State.newsletters.filter(n => n.topic === activeTopicId);
+    if (!items.length) {
+      list.innerHTML = `<div class="empty-state"><span class="empty-icon">📭</span><div class="empty-title">No newsletters in this topic</div><div class="empty-sub">Generate newsletters first using the Generator tab</div></div>`;
+      return;
+    }
+    list.innerHTML = '';
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="section-header" style="margin-top:var(--s3)"><div class="section-title">${TOPICS.find(t=>t.id===activeTopicId)?.icon} ${TOPICS.find(t=>t.id===activeTopicId)?.name}</div><div class="section-sub">${items.length} newsletters</div></div>`;
+    list.appendChild(section);
+    const frag = document.createDocumentFragment();
+    items.forEach(nl => frag.appendChild(renderNewsletterCard(nl)));
+    list.appendChild(frag);
+  }
+
+  return { renderTopicsGrid, renderTopicFiltered };
+})();
+
+// ══════════════════════════════════════════════════════════
+// EXPORT MODULE
+// ══════════════════════════════════════════════════════════
+const Exports = (() => {
+  function downloadFile(content, filename, type) {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function formatTxt(newsletters) {
+    return newsletters.map(nl =>
+      `#${String(nl.index).padStart(3,'0')} — ${nl.title}\nTopic: ${nl.topicName}\n${'─'.repeat(60)}\n${nl.body}\n\n${'═'.repeat(60)}\n`
+    ).join('\n');
+  }
+
+  function updateSummary() {
+    const total = State.newsletters.length;
+    const favs = State.favCount();
+    const used = State.usedCount();
+    ['exp-total', 'qs-total', 'stat-total'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = total; });
+    ['exp-favs', 'qs-favs', 'stat-favs'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = favs; });
+    ['exp-used', 'qs-used'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = used; });
+  }
+
+  return {
+    updateSummary,
+    copyAll() {
+      if (!State.newsletters.length) { UI.toast('No newsletters to copy', ''); return; }
+      const text = formatTxt(State.newsletters);
+      navigator.clipboard.writeText(text).then(() => UI.toast('✓ All newsletters copied!', 'success')).catch(() => UI.toast('Copy failed', ''));
+    },
+    exportTxt(newsletters = State.newsletters, filename = 'ChrisTechVA-newsletters.txt') {
+      if (!newsletters.length) { UI.toast('No newsletters to export', ''); return; }
+      downloadFile(formatTxt(newsletters), filename, 'text/plain');
+      UI.toast('✓ TXT exported!', 'success');
+    },
+    exportJson() {
+      if (!State.newsletters.length) { UI.toast('No newsletters to export', ''); return; }
+      const data = JSON.stringify({ meta: { generated: new Date().toISOString(), count: State.newsletters.length, source: 'ChrisTechVA Newsletter Studio' }, newsletters: State.newsletters }, null, 2);
+      downloadFile(data, 'ChrisTechVA-newsletters.json', 'application/json');
+      UI.toast('✓ JSON exported!', 'success');
+    },
+    exportFavs() {
+      const favs = State.newsletters.filter(nl => State.isFav(nl.id));
+      if (!favs.length) { UI.toast('No saved newsletters to export', ''); return; }
+      this.exportTxt(favs, 'ChrisTechVA-favorites.txt');
+    },
+    exportCsv() {
+      if (!State.newsletters.length) { UI.toast('No newsletters to export', ''); return; }
+      const header = 'Index,Title,Topic,Body,Tags,Saved,Used';
+      const rows = State.newsletters.map(nl =>
+        `${nl.index},"${nl.title.replace(/"/g,'""')}","${nl.topicName}","${nl.body.replace(/"/g,'""').replace(/\n/g,' ')}","${nl.tags.join(';')}",${State.isFav(nl.id)},${State.isUsed(nl.id)}`
+      );
+      downloadFile([header, ...rows].join('\n'), 'ChrisTechVA-newsletters.csv', 'text/csv');
+      UI.toast('✓ CSV exported!', 'success');
+    }
+  };
+})();
+
+// ══════════════════════════════════════════════════════════
+// NAVIGATION MODULE
+// ══════════════════════════════════════════════════════════
+const Nav = (() => {
+  const views = ['generator', 'library', 'topics', 'export', 'settings'];
+
+  function switchTo(viewId) {
+    views.forEach(v => {
+      document.getElementById(`view-${v}`)?.classList.toggle('active', v === viewId);
+      const btn = document.querySelector(`.nav-item[data-view="${v}"]`);
+      if (btn) {
+        btn.classList.toggle('active', v === viewId);
+        btn.setAttribute('aria-current', v === viewId ? 'page' : 'false');
+      }
+    });
+    if (viewId === 'library') { Library.populateFilters(); Library.render(); }
+    if (viewId === 'topics') { Topics.renderTopicsGrid(); }
+    if (viewId === 'export') { Exports.updateSummary(); }
+  }
+
+  function init() {
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      btn.addEventListener('click', () => switchTo(btn.dataset.view));
+    });
+  }
+
+  return { init, switchTo };
+})();
+
+// ══════════════════════════════════════════════════════════
+// SETTINGS MODULE
+// ══════════════════════════════════════════════════════════
+function initSettings() {
+  const toggleEl = (id, key) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.classList.toggle('on', State.settings[key]);
+    btn.setAttribute('aria-checked', State.settings[key]);
+    btn.addEventListener('click', () => {
+      const val = !State.settings[key];
+      State.updateSettings(key, val);
+      btn.classList.toggle('on', val);
+      btn.setAttribute('aria-checked', val);
+      Library.render();
+    });
+  };
+
+  toggleEl('tog-numbers', 'showNumbers');
+  toggleEl('tog-badges', 'showBadges');
+  toggleEl('tog-compact', 'compact');
+
+  document.getElementById('btn-clear-favs')?.addEventListener('click', () => {
+    State.clearFavs();
+    updateStats();
+    UI.toast('Favorites cleared', '');
+  });
+
+  document.getElementById('btn-reset-used')?.addEventListener('click', () => {
+    State.resetUsed();
+    updateStats();
+    UI.toast('Used status reset', '');
+  });
+
+  document.getElementById('btn-clear-all')?.addEventListener('click', () => {
+    if (!confirm('Delete all generated newsletters? This cannot be undone.')) return;
+    State.clearAll();
+    updateStats();
+    UI.toast('All data cleared', '');
+    document.getElementById('quick-stats-card').style.display = 'none';
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+// GENERATOR CONTROLLER
+// ══════════════════════════════════════════════════════════
+function initGenerator() {
+  const btn = document.getElementById('btn-generate');
+  const progressWrap = document.getElementById('gen-progress-wrap');
+  const progressBar = document.getElementById('gen-progress-bar');
+  const progressStatus = document.getElementById('gen-progress-status');
+
+  btn?.addEventListener('click', async () => {
+    const count = parseInt(document.getElementById('sel-count').value) || 200;
+    btn.disabled = true;
+    btn.textContent = 'Generating…';
+    progressWrap.classList.add('visible');
+    progressBar.style.width = '0%';
+
+    try {
+      const newsletters = await Generator.generate(count, (pct, status) => {
+        progressBar.style.width = `${pct}%`;
+        if (progressStatus) progressStatus.textContent = status;
+      });
+
+      State.setNewsletters(newsletters);
+      updateStats();
+      Library.populateFilters();
+
+      progressBar.style.width = '100%';
+      if (progressStatus) progressStatus.textContent = `✓ ${newsletters.length} newsletters generated!`;
+
+      document.getElementById('quick-stats-card').style.display = '';
+      document.getElementById('qs-total').textContent = newsletters.length;
+      document.getElementById('qs-favs').textContent = 0;
+      document.getElementById('qs-used').textContent = 0;
+
+      setTimeout(() => {
+        progressWrap.classList.remove('visible');
+        btn.disabled = false;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Regenerate Newsletters`;
+        UI.toast(`✓ ${newsletters.length} newsletters ready!`, 'success');
+      }, 1200);
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Generate Newsletters';
+      progressWrap.classList.remove('visible');
+      UI.toast('Generation failed. Please try again.', '');
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+// SEARCH & FILTER
+// ══════════════════════════════════════════════════════════
+function initSearchAndFilter() {
+  let debounceTimer;
+  const debounce = (fn, ms) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(fn, ms);
+  };
+
+  document.getElementById('search-input')?.addEventListener('input', () => {
+    debounce(() => { Library.resetPage(); Library.render(); }, 250);
+  });
+
+  document.getElementById('filter-topic')?.addEventListener('change', () => { Library.resetPage(); Library.render(); });
+  document.getElementById('filter-status')?.addEventListener('change', () => { Library.resetPage(); Library.render(); });
+
+  document.getElementById('btn-clear-filters')?.addEventListener('click', () => {
+    const s = document.getElementById('search-input'); if (s) s.value = '';
+    const ft = document.getElementById('filter-topic'); if (ft) ft.value = '';
+    const fs = document.getElementById('filter-status'); if (fs) fs.value = '';
+    Library.resetPage(); Library.render();
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+// EXPORT BINDINGS
+// ══════════════════════════════════════════════════════════
+function initExportBindings() {
+  document.getElementById('btn-copy-all')?.addEventListener('click', () => Exports.copyAll());
+  document.getElementById('btn-export-txt')?.addEventListener('click', () => Exports.exportTxt());
+  document.getElementById('btn-export-json')?.addEventListener('click', () => Exports.exportJson());
+  document.getElementById('btn-export-favs')?.addEventListener('click', () => Exports.exportFavs());
+  document.getElementById('btn-export-csv')?.addEventListener('click', () => Exports.exportCsv());
+}
+
+// ══════════════════════════════════════════════════════════
+// STATS UPDATE
+// ══════════════════════════════════════════════════════════
+function updateStats() {
+  Exports.updateSummary();
+  const t = State.newsletters.length;
+  const f = State.favCount();
+  document.getElementById('stat-total').textContent = t;
+  document.getElementById('stat-favs').textContent = f;
+}
+
+// ══════════════════════════════════════════════════════════
+// SCROLL TO TOP FAB
+// ══════════════════════════════════════════════════════════
+function initFab() {
+  const fab = document.getElementById('fab-top');
+  const views = document.querySelectorAll('.view');
+  views.forEach(v => {
+    v.addEventListener('scroll', () => {
+      fab.classList.toggle('visible', v.scrollTop > 300 && v.classList.contains('active'));
+    });
+  });
+  fab.addEventListener('click', () => {
+    document.querySelector('.view.active')?.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+// SERVICE WORKER REGISTRATION
+// ══════════════════════════════════════════════════════════
+function registerSW() {
+  if ('serviceWorker' in navigator) {
+    const swCode = `
+const CACHE = 'ctva-v1';
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/'])));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(clients.claim());
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('/')))
+  );
+});`;
+    const blob = new Blob([swCode], { type: 'application/javascript' });
+    const swUrl = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swUrl).catch(() => {});
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// PWA MANIFEST
+// ══════════════════════════════════════════════════════════
+function injectManifest() {
+  const manifest = {
+    name: "ChrisTechVA Newsletter Studio",
+    short_name: "CTVANewsletter",
+    description: "AI Workflow Automation LinkedIn Newsletter Generator",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#0a0a0f",
+    theme_color: "#8360C3",
+    orientation: "portrait-primary",
+    icons: [
+      { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='url(%23g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%238360C3'/><stop offset='1' stop-color='%232EBF91'/></linearGradient></defs><text x='50%' y='58%' font-size='110' text-anchor='middle' dominant-baseline='middle' fill='white' font-family='system-ui' font-weight='800'>CT</text></svg>", sizes: "192x192", type: "image/svg+xml" },
+      { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='96' fill='url(%23g)'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%238360C3'/><stop offset='1' stop-color='%232EBF91'/></linearGradient></defs><text x='50%' y='58%' font-size='280' text-anchor='middle' dominant-baseline='middle' fill='white' font-family='system-ui' font-weight='800'>CT</text></svg>", sizes: "512x512", type: "image/svg+xml" }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('link');
+  link.rel = 'manifest'; link.href = url;
+  document.head.appendChild(link);
+}
+
+// ══════════════════════════════════════════════════════════
+// APP INIT
+// ══════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  State.load();
+  Nav.init();
+  initGenerator();
+  initSearchAndFilter();
+  initExportBindings();
+  initSettings();
+  initFab();
+  registerSW();
+  injectManifest();
+  updateStats();
+
+  // If newsletters were saved, show quick stats
+  if (State.newsletters.length > 0) {
+    document.getElementById('quick-stats-card').style.display = '';
+  }
+});
+</script>
+</body>
+</html>
